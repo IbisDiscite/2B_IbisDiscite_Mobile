@@ -22,7 +22,7 @@ class ExamplesView extends React.Component {
     console.log("dadasdasdasdadadasdasda--------------fasasdasddfashjdkgsajdkh")
     return (
       <View style={styles.container}>
-        <Text>Exampleadsdasdasds🚀🦉</Text>
+        <Text>Exampleadsdasdasds🚀</Text>
       </View>
     );
   }

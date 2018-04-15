@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, Button, Image, View, Text } from 'react-native';
+import { TouchableHighlight, Image, View, Text } from 'react-native';
+import {Button} from 'react-native-elements'
 
 class HamburguerLogo extends React.Component {
   render() {
     return (
-      <TouchableHighlight onPress={this.onPress}>
-        <Image
-          source={require('../images/menu.png')}
-          style={
-            { width: 30, height: 30 , right: 5}}
-            />
-      </TouchableHighlight>
+      <Button
+        small
+        icon={{name: 'home'}}
+        backgroundColor={'#FF4000'}
+        title=" "
+      />
     )
   }
 }
