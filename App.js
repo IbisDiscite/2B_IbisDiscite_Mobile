@@ -18,7 +18,7 @@ console.disableYellowBox = true;
 
 const client = new ApolloClient({
     link: new HttpLink({
-      uri: 'http://35.185.3.235:5000/graphiql'
+      uri: 'http://35.185.3.235:5000'
     }),
     cache: new InMemoryCache(),
 });

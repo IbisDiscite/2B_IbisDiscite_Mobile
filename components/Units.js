@@ -8,6 +8,7 @@ import gql from 'graphql-tag';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import client from '../App.js';
+import { List, ListItem } from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
 
@@ -23,42 +24,17 @@ const UNIT_QUERY = gql`
   }
 `;
 
-/*const Units = () => (
-  <Query query = {UNIT_QUERY}>
-    {({ loading, error, data }) => {
-      if (loading) {
-        return (
-          <ActivityIndicator color="blue"/>
-        )
-      }
-      if (error) {
-        return (
-          <Text>{`Error: ${error}`}</Text>
-        )
-      }
-
-      return (
-        data.un.map(({nombre}) => (
-          <View key={nombre}>
-            <Text>{`${nombre}`}</Text>
-          </View>
-        ))
-      )
-    }}
-  </Query>
-)*/
-
 const Units = () => (
   <Query query = {UNIT_QUERY}>
     {({ loading, error, data }) => {
-      if (loading) {
-        return (
-          <ActivityIndicator color="blue"/>
-        )
-      }
       if (error) {
         return (
           <Text>{`Error: ${error}`}</Text>
+        )
+      }
+      if (loading) {
+        return (
+          <ActivityIndicator color="blue"/>
         )
       }
 
@@ -72,7 +48,6 @@ const Units = () => (
     }}
   </Query>
 )
-
 
 export default class UnitResults extends React.Component {
   static navigationOptions = ({ navigation }) => ({
