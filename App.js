@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import { ApolloClient} from 'apollo-client';
+import gql from 'graphql-tag';
+import { HttpLink } from 'apollo-link-http';
+import  { ApolloProvider, graphql } from 'react-apollo';
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import ExamplesView from "./components/Examples"
 import HomeView from "./components/Home"
 import UnitResults from "./components/Units"
 
+console.disableWarnings = true;
+require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
+console.disableYellowBox = true;
+
+
+const client = new ApolloClient({
+    link: new HttpLink({
+      uri: 'http://35.185.3.235:5000/graphiql'
+    }),
+    cache: new InMemoryCache(),
+});
+
 export default class App extends React.Component {
   render() {
-    return <RootStack />;
+    console.log("dasdasdsadasdsad")
+    return (
+      <ApolloProvider client={client}>
+        <RootStack />
+      </ApolloProvider>
+    );
   }
 }
 

@@ -1,34 +1,97 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import  {ApolloProvider} from 'react-apollo';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import  {Query} from 'react-apollo';
 import { ApolloClient} from 'apollo-client';
+import { graphql } from 'react-apollo';
+import { StackNavigator } from 'react-navigation';
+import gql from 'graphql-tag';
 import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import client from '../App.js';
 
-// Initialize the Apollo Client
-const client = new ApolloClient({
-    link: new HttpLink({ uri: 'http://35.185.3.235:5000/graphiql' }),
-    cache: new InMemoryCache(),
-  });
+import HamburguerLogo from './HeaderComponents'
 
+console.disableWarnings = true;
+require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
+console.disableYellowBox = true;
 // Define query types
+const UNIT_QUERY = gql`
+  query units {
+    allUnits {
+      nombre
+    }
+  }
+`;
+
+/*const Units = () => (
+  <Query query = {UNIT_QUERY}>
+    {({ loading, error, data }) => {
+      if (loading) {
+        return (
+          <ActivityIndicator color="blue"/>
+        )
+      }
+      if (error) {
+        return (
+          <Text>{`Error: ${error}`}</Text>
+        )
+      }
+
+      return (
+        data.un.map(({nombre}) => (
+          <View key={nombre}>
+            <Text>{`${nombre}`}</Text>
+          </View>
+        ))
+      )
+    }}
+  </Query>
+)*/
+
+const Units = () => (
+  <Query query = {UNIT_QUERY}>
+    {({ loading, error, data }) => {
+      if (loading) {
+        return (
+          <ActivityIndicator color="blue"/>
+        )
+      }
+      if (error) {
+        return (
+          <Text>{`Error: ${error}`}</Text>
+        )
+      }
+
+      return (
+        data.un.map(({nombre}) => (
+          <View key={nombre}>
+            <Text>{`${nombre}`}</Text>
+          </View>
+        ))
+      )
+    }}
+  </Query>
+)
 
 
-class UnitResults extends Component {
-
+export default class UnitResults extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'IbisDiscite',
+    headerTintColor: 'whitesmoke',
+    headerStyle: {
+      backgroundColor: '#FF4000'
+    },
+    headerRight:
+      <HamburguerLogo />,
+  });
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{this.props.result}</Text>
+        <Units />
       </View>
     )
   }
 
-  _voteForLink = async () => {
-    // ... you'll implement this in chapter 6
-  }
 }
 
 const styles = StyleSheet.create({
@@ -36,22 +99,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'whitesmoke',
   },
   text: {
     backgroundColor: 'whitesmoke',
-    color: '#4A90E2',
+    color: '#64FE2E',
     fontSize: 24,
     padding: 10,
   },
 })
-
-const UNIT_QUERY = gql`
-  query allUnits{
-    allUnits{
-      nombre
-    }
-  }
-`;
-
-const result = graphql(UNIT_QUERY)(UnitResults);
-export default UnitResults;

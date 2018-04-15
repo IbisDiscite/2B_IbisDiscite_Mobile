@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { TouchableHighlight, Button, Image, StyleSheet, Text, View, Header } from 'react-native';
+
+import HamburguerLogo from './HeaderComponents'
 
 class HomeView extends React.Component {
-  static navigationOptions = {
-    title: 'Home',
-    headerTintColor: 'blue',
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: 'IbisDiscite',
+    headerTintColor: 'whitesmoke',
+    headerStyle: {
+      backgroundColor: '#FF4000'
+    },
+    headerRight:
+      <HamburguerLogo />,
+  });
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Home</Text>
         <Button
           title="View Examples"
           onPress={() => this.props.navigation.navigate('Examples')}
@@ -30,11 +36,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'whitesmoke',
   },
   text: {
     backgroundColor: 'whitesmoke',
-    color: '#4A90E2',
+    color: '#64FE2E',
     fontSize: 24,
     padding: 10,
   },
