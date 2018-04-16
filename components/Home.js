@@ -1,13 +1,29 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { TouchableHighlight, Image, StyleSheet, Text, View, Header } from 'react-native';
+import { TouchableHighlight, Image, StyleSheet, Text, View, Header, ActivityIndicator } from 'react-native';
 import {Button} from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
 
+console.disableWarnings = true;
+require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
+console.disableYellowBox = true;
 
+const loginRequest = new Request(
+  'http://35.185.3.235:4000/user_token',
+  {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'auth': {'email': "dafrodriguezro@unal.edu.co", 'password': "securepassword"}
+    })
+  }
+);
 
-class HomeView extends React.Component {
+export default class HomeView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'IbisDiscite',
     headerTintColor: 'whitesmoke',
@@ -17,22 +33,85 @@ class HomeView extends React.Component {
     headerRight:
       <HamburguerLogo />,
   });
-  render() {
-    return (
-      <View style={styles.container}>
 
-      <Text style={styles.text}>🚀If you wanna see all units from our App, so you can learn what you want, press here</Text>
-        <Button
-          raised
-          fontSize={20}
-          icon={{name: 'class'}}
-          backgroundColor={'#397af8'}
-          borderRadius={8}
-          title="View Units"
-          onPress={() => this.props.navigation.navigate('Units')}
-        />
-      </View>
-    );
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true, loged: false}
+  }
+
+  componentDidMount(){
+    return fetch('http://35.185.3.235:4000/user_token',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          auth: {email: "dafrodriguezro@unal.edu.co", password: "securepassword"}
+        })
+      })
+      .then((response) => {
+        response.json();
+        console.log(response.status);
+        this.setState({
+          status: response.status,
+        })
+        if(response.status == 201){
+          console.log("Usuario valido")
+          this.setState({
+            loged: true,
+          })
+        }
+      })
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function(){
+        });
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
+  render() {
+    if(this.state.isLoading){
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+          <Text style={styles.item}>Verificando Usuario...</Text>
+        </View>
+      )
+    }
+    if(this.state.status == 404){
+      return(
+        <View style={styles.container}>
+          <ActivityIndicator />
+          <Text style={styles.item}>YOU ARE NOT A VALID USER!</Text>
+        </View>
+      )
+    }
+    console.log(this.state)
+    if(this.state.loged){
+      return (
+        <View style={styles.container}>
+
+        <Text style={styles.text}>🚀If you wanna see all units from our App, so you can learn what you want, press here</Text>
+        <Text style={styles.text}>Log in soccessfull</Text>
+          <Button
+            raised
+            fontSize={20}
+            icon={{name: 'class'}}
+            backgroundColor={'#397af8'}
+            borderRadius={8}
+            title="View Units"
+            onPress={() => this.props.navigation.navigate('Units')}
+          />
+        </View>
+      );
+    }
   }
 }
 
@@ -53,5 +132,3 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 })
-
-export default HomeView

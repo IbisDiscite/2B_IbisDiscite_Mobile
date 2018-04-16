@@ -55,8 +55,8 @@ export default class UnitResults extends React.Component {
       return (
         <View style={styles.container}>
           <ActivityIndicator />
-          </View>
-        )
+        </View>
+      )
     }
     return (
       <View style={styles.container}>
