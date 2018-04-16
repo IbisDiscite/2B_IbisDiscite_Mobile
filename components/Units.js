@@ -61,10 +61,18 @@ export default class UnitResults extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Wellcome to IbisDiscite, this are the units we offer to you </Text>
+        <Text style={styles.text}>🚀Wellcome to IbisDiscite, this are the units we offer to you.</Text>
+        <Text style={styles.text}>🚀If you want to view examples of an specific unit, tap on the unit you want.</Text>
         <FlatList
+          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: 'whitesmoke' } } /> }
           data={this.state.dataSource}
-          renderItem={({item}) => <Text style={styles.item}>{item.id}: {item.nombre}</Text>}
+          renderItem={({item}) => (
+            <TouchableHighlight
+              onPress={() => this._onPress(item)}
+            >
+              <Text style={styles.item}>{item.id}: {item.nombre}</Text>
+            </TouchableHighlight>
+          )}
           keyExtractor={(item, index) => index}
         />
       </View>
@@ -84,6 +92,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   item: {
+    left: 8,
+    right: 15,
+    borderRadius: 5,
     backgroundColor: '#397af8',
     color: 'whitesmoke',
     fontSize: 20,
