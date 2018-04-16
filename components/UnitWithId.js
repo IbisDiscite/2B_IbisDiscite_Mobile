@@ -26,8 +26,28 @@ export default class UnitWithId extends React.Component {
     this.state ={ isLoading: true};
   }
 
-  componentDidMount(){
+  /*componentDidMount(){
     return fetch(`http://35.185.3.235:4001/units/${this.props.navigation.state.params.id}`,
+    {
+      method: 'GET'
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+  */
+  componentDidMount(){
+    return fetch(`http://35.185.3.235:4001/examples/`,
     {
       method: 'GET'
     })
@@ -55,8 +75,17 @@ export default class UnitWithId extends React.Component {
         )
     }
     return (
+
       <View style={styles.container}>
-        <Text style = {styles.text}>You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
+        <Text style = {styles.text}>🚀You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
+        <FlatList
+          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: 'whitesmoke' } } /> }
+          data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
+          renderItem={({item}) => (
+              <Text style={styles.item}>{item.contenido}</Text>
+          )}
+          keyExtractor={(item, index) => index}
+        />
       </View>
     )
   }

@@ -58,6 +58,8 @@ export default class UnitResults extends React.Component {
           </View>
         )
     }
+    console.log("DADADADADADADADADDADADAJKASBHFKJSHFDLKAHDÑLAKDJALSKDJ");
+    console.log(this.state);
     return (
       <View style={styles.container}>
         <Text style={styles.text}>🚀Wellcome to IbisDiscite, this are the units we offer to you.</Text>
