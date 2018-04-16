@@ -70,8 +70,8 @@ export default class UnitWithId extends React.Component {
       return (
         <View style={styles.container}>
           <ActivityIndicator />
-          </View>
-        )
+        </View>
+      )
     }
     return (
       <View style={styles.container}>
@@ -81,7 +81,7 @@ export default class UnitWithId extends React.Component {
           data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
           renderItem={({item}) => (
             <TouchableHighlight
-              onPress={() => this.props.navigation.navigate('ExamplesView')}
+              onPress={() => this.props.navigation.navigate('Examples',{id: item.id})}
             >
               <Text style={styles.item}>Ejemplo {item.id}</Text>
             </TouchableHighlight>

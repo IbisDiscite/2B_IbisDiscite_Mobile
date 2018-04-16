@@ -25,10 +25,38 @@ export default class ExamplesView extends React.Component {
     this.state ={ isLoading: true};
   }
 
+  componentDidMount(){
+    return fetch(`http://35.185.3.235:4001/examples/${this.props.navigation.state.params.id}`,
+    {
+      method: 'GET'
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
   render() {
+    if(this.state.isLoading){
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+        </View>
+      )
+    }
     return (
       <View style={styles.container}>
-        <Text>Showing an specific 🚀</Text>
+        <Text>Showing an specific example {this.props.navigation.state.params.id}🚀</Text>
+        <Text style={styles.item}>{this.state.dataSource.contenido}🚀</Text>
       </View>
     );
   }
