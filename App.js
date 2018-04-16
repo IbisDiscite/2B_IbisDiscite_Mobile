@@ -6,6 +6,7 @@ import { ApolloClient} from 'apollo-client';
 import ExamplesView from "./components/Examples"
 import HomeView from "./components/Home"
 import UnitResults from "./components/Units"
+import UnitWithId from "./components/UnitWithId"
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
@@ -33,6 +34,9 @@ const RootStack = StackNavigator(
     Units: {
       screen: UnitResults,
     },
+    UnitId: {
+      screen: UnitWithId,
+    }
   },
   {
     initialRouteName: 'Home',

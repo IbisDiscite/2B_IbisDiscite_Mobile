@@ -9,15 +9,7 @@ console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
-const unitsRequest = new Request(
-  'http://35.185.3.235:4001/units',
-  {
-    method: 'GET'
-  }
-);
-
-
-export default class UnitResults extends React.Component {
+export default class UnitWithId extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'IbisDiscite',
     headerTintColor: 'whitesmoke',
@@ -30,11 +22,15 @@ export default class UnitResults extends React.Component {
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true}
+    console.log(props);
+    this.state ={ isLoading: true};
   }
 
   componentDidMount(){
-    return fetch(unitsRequest)
+    return fetch(`http://35.185.3.235:4001/units/${this.props.navigation.state.params.id}`,
+    {
+      method: 'GET'
+    })
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
@@ -60,20 +56,7 @@ export default class UnitResults extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>🚀Wellcome to IbisDiscite, this are the units we offer to you.</Text>
-        <Text style={styles.text}>🚀If you want to view examples of an specific unit, tap on the unit you want.</Text>
-        <FlatList
-          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: 'whitesmoke' } } /> }
-          data={this.state.dataSource}
-          renderItem={({item}) => (
-            <TouchableHighlight
-              onPress={() => this.props.navigation.navigate('UnitId', {id: item.id, name: item.nombre})}
-            >
-              <Text style={styles.item}>{item.id}: {item.nombre}</Text>
-            </TouchableHighlight>
-          )}
-          keyExtractor={(item, index) => index}
-        />
+        <Text style = {styles.text}>You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
       </View>
     )
   }
