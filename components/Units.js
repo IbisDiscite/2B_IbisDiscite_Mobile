@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
-import  {Query} from 'react-apollo';
-import { ApolloClient} from 'apollo-client';
-import { graphql } from 'react-apollo';
+import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import gql from 'graphql-tag';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import client from '../App.js';
 import { List, ListItem } from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
@@ -15,39 +8,14 @@ import HamburguerLogo from './HeaderComponents'
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
-// Define query types
-const UNIT_QUERY = gql`
-  query units {
-    allUnits {
-      nombre
-    }
+
+const unitsRequest = new Request(
+  'http://35.185.3.235:4001/units',
+  {
+    method: 'GET'
   }
-`;
+);
 
-const Units = () => (
-  <Query query = {UNIT_QUERY}>
-    {({ loading, error, data }) => {
-      if (error) {
-        return (
-          <Text>{`Error: ${error}`}</Text>
-        )
-      }
-      if (loading) {
-        return (
-          <ActivityIndicator color="blue"/>
-        )
-      }
-
-      return (
-        data.un.map(({nombre}) => (
-          <View key={nombre}>
-            <Text>{`${nombre}`}</Text>
-          </View>
-        ))
-      )
-    }}
-  </Query>
-)
 
 export default class UnitResults extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -59,27 +27,66 @@ export default class UnitResults extends React.Component {
     headerRight:
       <HamburguerLogo />,
   });
+
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true}
+  }
+
+  componentDidMount(){
+    return fetch(unitsRequest)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
   render() {
+    const list = this.state.dataSource
+    if(this.state.isLoading){
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+          </View>
+        )
+    }
     return (
       <View style={styles.container}>
-        <Units />
+        <Text style={styles.text}>Wellcome to IbisDiscite, this are the units we offer to you </Text>
+        <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => <Text style={styles.item}>{item.id}: {item.nombre}</Text>}
+          keyExtractor={(item, index) => index}
+        />
       </View>
     )
   }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'whitesmoke',
   },
   text: {
     backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
-    fontSize: 24,
+    color: 'black',
+    fontSize: 15,
     padding: 10,
   },
+  item: {
+    backgroundColor: '#397af8',
+    color: 'whitesmoke',
+    fontSize: 20,
+    padding: 10,
+  }
 })
