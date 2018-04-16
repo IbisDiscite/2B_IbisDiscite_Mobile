@@ -1,27 +1,15 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { TouchableHighlight, Image, StyleSheet, Text, View, Header, ActivityIndicator } from 'react-native';
-import {Button} from 'react-native-elements'
+import {Button} from 'react-native-elements';
 
-import HamburguerLogo from './HeaderComponents'
+import HamburguerLogo from './HeaderComponents';
+import Login from './Login';
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
-const loginRequest = new Request(
-  'http://35.185.3.235:4000/user_token',
-  {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      'auth': {'email': "dafrodriguezro@unal.edu.co", 'password': "securepassword"}
-    })
-  }
-);
 
 export default class HomeView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -48,7 +36,7 @@ export default class HomeView extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          auth: {email: "dafrodriguezro@unal.edu.co", password: "securepassword"}
+          auth: {email: this.props.navigation.state.params.user, password: this.props.navigation.state.params.pass}
         })
       })
       .then((response) => {
@@ -77,18 +65,24 @@ export default class HomeView extends React.Component {
   }
 
   render() {
+    console.log("PROPS DEL HOME:")
+    console.log(this.props)
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator/>
           <Text style={styles.item}>Verificando Usuario...</Text>
         </View>
+      )
+    }
+    if(this.state.loged == false){
+      return(
+          <Login navigation={this.props.navigation}/>
       )
     }
     if(this.state.status == 404){
       return(
         <View style={styles.container}>
-          <ActivityIndicator />
           <Text style={styles.item}>YOU ARE NOT A VALID USER!</Text>
         </View>
       )
@@ -99,7 +93,7 @@ export default class HomeView extends React.Component {
         <View style={styles.container}>
 
         <Text style={styles.text}>🚀If you wanna see all units from our App, so you can learn what you want, press here</Text>
-        <Text style={styles.text}>Log in soccessfull</Text>
+        <Text style={styles.text}>Succesfully loged in</Text>
           <Button
             raised
             fontSize={20}
@@ -131,4 +125,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 10,
   },
+  item: {
+    left: 8,
+    right: 15,
+    borderRadius: 5,
+    backgroundColor: '#397af8',
+    color: 'whitesmoke',
+    fontSize: 20,
+    padding: 10,
+  }
 })

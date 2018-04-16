@@ -7,6 +7,7 @@ import ExamplesView from "./components/Examples"
 import HomeView from "./components/Home"
 import UnitResults from "./components/Units"
 import UnitWithId from "./components/UnitWithId"
+import Login from "./components/Login"
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
@@ -25,6 +26,9 @@ export default class App extends React.Component {
 
 const RootStack = StackNavigator(
   {
+    Login: {
+      screen: Login,
+    },
     Home: {
       screen: HomeView,
     },
@@ -37,9 +41,10 @@ const RootStack = StackNavigator(
     UnitId: {
       screen: UnitWithId,
     },
+
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
   }
 );
 

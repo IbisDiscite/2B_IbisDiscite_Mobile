@@ -51,6 +51,8 @@ export default class UnitResults extends React.Component {
   }
 
   render() {
+    /*console.log("PROPS DE UNITS:")
+    console.log(this.props)*/
     if(this.state.isLoading){
       return (
         <View style={styles.container}>

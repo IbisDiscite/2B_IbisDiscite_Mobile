@@ -25,26 +25,6 @@ export default class UnitWithId extends React.Component {
     this.state ={ isLoading: true};
   }
 
-  /*componentDidMount(){
-    return fetch(`http://35.185.3.235:4001/units/${this.props.navigation.state.params.id}`,
-    {
-      method: 'GET'
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson,
-        }, function(){
-
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
-  }
-  */
   componentDidMount(){
     return fetch(`http://35.185.3.235:4001/examples/`,
     {
@@ -66,6 +46,8 @@ export default class UnitWithId extends React.Component {
   }
 
   render() {
+    /*console.log("PROPS DE UNIT WITH ID:")
+    console.log(this.props)*/
     if(this.state.isLoading){
       return (
         <View style={styles.container}>

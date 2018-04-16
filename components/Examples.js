@@ -46,6 +46,8 @@ export default class ExamplesView extends React.Component {
   }
 
   render() {
+    /*console.log("PROPS DE EXAMPLES:")
+    console.log(this.props)*/
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
