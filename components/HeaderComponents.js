@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, Image, View, Text } from 'react-native';
 import {Button} from 'react-native-elements'
+import { StackNavigator } from 'react-navigation';
 
-class HamburguerLogo extends React.Component {
+export default class HamburguerLogo extends React.Component {
   render() {
     return (
       <Button
         small
-        icon={{name: 'home'}}
+        icon={{name: 'reorder'}}
         backgroundColor={'#FF4000'}
         title=" "
       />
     )
   }
 }
-
-export default HamburguerLogo;

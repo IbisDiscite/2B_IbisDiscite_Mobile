@@ -22,7 +22,6 @@ export default class UnitWithId extends React.Component {
 
   constructor(props){
     super(props);
-    console.log(props);
     this.state ={ isLoading: true};
   }
 
@@ -75,14 +74,17 @@ export default class UnitWithId extends React.Component {
         )
     }
     return (
-
       <View style={styles.container}>
         <Text style = {styles.text}>🚀You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
         <FlatList
           ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: 'whitesmoke' } } /> }
           data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
           renderItem={({item}) => (
-              <Text style={styles.item}>{item.contenido}</Text>
+            <TouchableHighlight
+              onPress={() => this.props.navigation.navigate('ExamplesView')}
+            >
+              <Text style={styles.item}>Ejemplo {item.id}</Text>
+            </TouchableHighlight>
           )}
           keyExtractor={(item, index) => index}
         />

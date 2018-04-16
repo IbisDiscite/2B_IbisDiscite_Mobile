@@ -36,7 +36,7 @@ const RootStack = StackNavigator(
     },
     UnitId: {
       screen: UnitWithId,
-    }
+    },
   },
   {
     initialRouteName: 'Home',

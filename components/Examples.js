@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { StyleSheet, Text, View } from 'react-native';
+import { List, ListItem } from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
 
@@ -8,7 +9,7 @@ console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
-class ExamplesView extends React.Component {
+export default class ExamplesView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'IbisDiscite',
     headerTintColor: 'whitesmoke',
@@ -18,11 +19,16 @@ class ExamplesView extends React.Component {
     headerRight:
       <HamburguerLogo />,
   });
+
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true};
+  }
+
   render() {
-    console.log("dadasdasdasdadadasdasda--------------fasasdasddfashjdkgsajdkh")
     return (
       <View style={styles.container}>
-        <Text>Exampleadsdasdasds🚀</Text>
+        <Text>Showing an specific 🚀</Text>
       </View>
     );
   }
@@ -32,16 +38,21 @@ class ExamplesView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'whitesmoke',
   },
   text: {
     backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
-    fontSize: 24,
+    color: 'black',
+    fontSize: 15,
     padding: 10,
   },
+  item: {
+    left: 8,
+    right: 15,
+    borderRadius: 5,
+    backgroundColor: '#397af8',
+    color: 'whitesmoke',
+    fontSize: 20,
+    padding: 10,
+  }
 })
-
-export default ExamplesView
