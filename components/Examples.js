@@ -5,6 +5,8 @@ import { List, ListItem } from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
 
+import GlRequest from './graphQLUtils';
+
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
@@ -26,23 +28,25 @@ export default class ExamplesView extends React.Component {
   }
 
   componentDidMount(){
-    return fetch(`http://35.185.3.235:4001/examples/${this.props.navigation.state.params.id}`,
-    {
-      method: 'GET'
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
+    var request = `query{
+      exampleById(id:${this.props.navigation.state.params.id}){
+        id
+        contenido
+      }
+    }`;
+
+    GlRequest(
+      request ,
+      (data) => {
         this.setState({
+          dataSource: data.exampleById,
           isLoading: false,
-          dataSource: responseJson,
-        }, function(){
+        })
+      },
+      (status, data) => {
 
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
+      }
+    );
   }
 
   render() {
