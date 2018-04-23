@@ -33,20 +33,22 @@ export default class Login extends React.Component {
 
           <Text style={styles.text}>Welcome to IbisDiscite, please log in</Text>
           <TextInput
-            style={{height: 40}}
+            style={{height: 50, textAlign: 'center'}}
             placeholder="Account"
             onChangeText={(user) => this.setState({user})}
           />
           <TextInput
-            style={{height: 40}}
+            style={{height: 50, textAlign: 'center'}}
             placeholder="Password"
             onChangeText={(pass) => this.setState({pass})}
           />
-          <TouchableHighlight
-            onPress={() => this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
-          >
-            <Text style={styles.item}>Log in</Text>
-          </TouchableHighlight>
+          <View style={styles.container}>
+            <TouchableHighlight
+              onPress={() => this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
+              >
+              <Text style={styles.log}>Log in</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       );
   }
@@ -69,6 +71,17 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   item: {
+    textAlign: 'center',
+    left: 8,
+    right: 15,
+    borderRadius: 5,
+    backgroundColor: '#397af8',
+    color: 'whitesmoke',
+    fontSize: 20,
+    padding: 10,
+  },
+  log: {
+    textAlign: 'center',
     left: 8,
     right: 15,
     borderRadius: 5,

@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   item: {
+    textAlign: 'center',
     left: 8,
     right: 15,
     borderRadius: 5,
@@ -133,5 +134,5 @@ const styles = StyleSheet.create({
     color: 'whitesmoke',
     fontSize: 20,
     padding: 10,
-  }
+  },
 })
