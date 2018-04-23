@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { List, ListItem } from 'react-native-elements'
+import { List, ListItem } from 'react-native-elements';
+
+import GlRequest from './graphQLUtils';
 
 import HamburguerLogo from './HeaderComponents'
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
+
+const request = `query{
+    allExamples{
+      id
+      unit_id
+      contenido
+    }
+}`;
 
 export default class UnitWithId extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -26,23 +36,18 @@ export default class UnitWithId extends React.Component {
   }
 
   componentDidMount(){
-    return fetch(`http://35.185.3.235:4001/examples/`,
-    {
-      method: 'GET'
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
+    GlRequest(
+      request ,
+      (data) => {
         this.setState({
+          dataSource: data.allExamples,
           isLoading: false,
-          dataSource: responseJson,
-        }, function(){
+        })
+      },
+      (status, data) => {
 
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
+      }
+    );
   }
 
   render() {
