@@ -24,10 +24,10 @@ export default class HomeView extends React.Component {
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true, loged: false}
+    this.state ={ isLoading: true, loged: true}
   }
 
-  componentDidMount(){
+  /*componentDidMount(){
     return fetch('http://35.185.3.235:4000/user_token',
       {
         method: 'POST',
@@ -62,12 +62,12 @@ export default class HomeView extends React.Component {
       .catch((error) =>{
         console.error(error);
       });
-  }
+  }*/
 
   render() {
     console.log("PROPS DEL HOME:")
     console.log(this.props)
-    if(this.state.isLoading){
+    /*if(this.state.isLoading){
       return (
         <View style={styles.container}>
           <ActivityIndicator/>
@@ -87,6 +87,7 @@ export default class HomeView extends React.Component {
         </View>
       )
     }
+    */
     console.log(this.state)
     if(this.state.loged){
       return (

@@ -5,16 +5,18 @@ import { List, ListItem } from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
 
+import GlRequest from './graphQLUtils';
+
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
-const unitsRequest = new Request(
-  'http://35.185.3.235:4001/units',
-  {
-    method: 'GET'
-  }
-);
+const request = `query{
+    allUnits{
+      id
+      nombre
+    }
+}`;
 
 
 export default class UnitResults extends React.Component {
@@ -34,25 +36,23 @@ export default class UnitResults extends React.Component {
   }
 
   componentDidMount(){
-    return fetch(unitsRequest)
-      .then((response) => response.json())
-      .then((responseJson) => {
+    GlRequest(
+      request ,
+      (data) => {
         this.setState({
+          dataSource: data.allUnits,
           isLoading: false,
-          dataSource: responseJson,
-        }, function(){
+        })
+      },
+      (status, data) => {
 
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
+      }
+    );
   }
 
   render() {
-    /*console.log("PROPS DE UNITS:")
-    console.log(this.props)*/
+    console.log("PROPS DE UNITS:")
+    console.log(this.state)
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
