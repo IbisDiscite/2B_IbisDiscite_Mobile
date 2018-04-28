@@ -14,10 +14,10 @@ export default class Login extends React.Component {
     title: 'IbisDiscite',
     headerTintColor: 'whitesmoke',
     headerStyle: {
-      backgroundColor: '#FF4000'
+      backgroundColor: '#000158'
     },
-    headerRight:
-      <HamburguerLogo />,
+    /*headerRight:
+      <HamburguerLogo />,*/
   });
 
   constructor(props){
@@ -32,22 +32,29 @@ export default class Login extends React.Component {
         <View style={styles.container}>
 
           <Text style={styles.text}>Welcome to IbisDiscite, please log in</Text>
+          <View style={styles.container}>
           <TextInput
             style={{height: 50, textAlign: 'center'}}
             placeholder="Account"
             onChangeText={(user) => this.setState({user})}
           />
           <TextInput
+            secureTextEntry={true}
             style={{height: 50, textAlign: 'center'}}
             placeholder="Password"
             onChangeText={(pass) => this.setState({pass})}
           />
+          </View>
           <View style={styles.container}>
-            <TouchableHighlight
+            <Button
+              raised
+              fontSize={20}
+              icon={{name: 'launch'}}
+              backgroundColor={'#397af8'}
+              borderRadius={8}
+              title="Log in"
               onPress={() => this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
-              >
-              <Text style={styles.log}>Log in</Text>
-            </TouchableHighlight>
+            />
           </View>
         </View>
       );
@@ -58,17 +65,19 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#8a899c',
+    justifyContent: 'center',
   },
   hitext: {
     backgroundColor: 'whitesmoke',
     color: '#64FE2E',
   },
   text: {
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#8a899c',
     color: 'black',
-    fontSize: 15,
+    fontSize: 20,
     padding: 10,
+    textAlign: 'center',
   },
   item: {
     textAlign: 'center',
@@ -80,14 +89,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
   },
-  log: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
-    padding: 10,
-  }
 })

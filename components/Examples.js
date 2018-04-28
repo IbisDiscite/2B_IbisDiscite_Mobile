@@ -16,10 +16,10 @@ export default class ExamplesView extends React.Component {
     title: 'IbisDiscite',
     headerTintColor: 'whitesmoke',
     headerStyle: {
-      backgroundColor: '#FF4000'
+      backgroundColor: '#000158'
     },
-    headerRight:
-      <HamburguerLogo />,
+    /*headerRight:
+      <HamburguerLogo />,*/
   });
 
   constructor(props){
@@ -72,10 +72,15 @@ export default class ExamplesView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#8a899c',
+    justifyContent: 'center',
+  },
+  hitext: {
     backgroundColor: 'whitesmoke',
+    color: '#64FE2E',
   },
   text: {
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#8a899c',
     color: 'black',
     fontSize: 15,
     padding: 10,
@@ -90,4 +95,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
   },
+  log: {
+    textAlign: 'center',
+    left: 8,
+    right: 15,
+    borderRadius: 5,
+    backgroundColor: '#397af8',
+    color: 'whitesmoke',
+    fontSize: 20,
+    padding: 10,
+  }
 })

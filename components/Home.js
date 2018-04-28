@@ -16,10 +16,10 @@ export default class HomeView extends React.Component {
     title: 'IbisDiscite',
     headerTintColor: 'whitesmoke',
     headerStyle: {
-      backgroundColor: '#FF4000'
+      backgroundColor: '#000158'
     },
-    headerRight:
-      <HamburguerLogo />,
+    /*headerRight:
+      <HamburguerLogo />,*/
   });
 
   constructor(props){
@@ -91,10 +91,11 @@ export default class HomeView extends React.Component {
     console.log(this.state)
     if(this.state.loged){
       return (
-        <View style={styles.container}>
+        <View style={styles.containerOne}>
 
         <Text style={styles.text}>🚀If you wanna see all units from our App, so you can learn what you want, press here</Text>
         <Text style={styles.text}>Succesfully loged in</Text>
+        <View style={styles.container}>
           <Button
             raised
             fontSize={20}
@@ -105,6 +106,7 @@ export default class HomeView extends React.Component {
             onPress={() => this.props.navigation.navigate('Units')}
           />
         </View>
+        </View>
       );
     }
   }
@@ -114,25 +116,16 @@ export default class HomeView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#8a899c',
+    justifyContent: 'center',
   },
-  hitext: {
-    backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
+  containerOne: {
+    flex: 1,
+    backgroundColor: '#8a899c',
   },
   text: {
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#8a899c',
     color: 'black',
-    fontSize: 15,
-    padding: 10,
-  },
-  item: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
     fontSize: 20,
     padding: 10,
   },
