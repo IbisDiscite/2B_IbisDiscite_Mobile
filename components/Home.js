@@ -92,7 +92,6 @@ export default class HomeView extends React.Component {
     if(this.state.loged){
       return (
         <View style={styles.containerOne}>
-
         <Text style={styles.text}>🚀If you wanna see all units from our App, so you can learn what you want, press here</Text>
         <Text style={styles.text}>Succesfully loged in</Text>
         <View style={styles.container}>
@@ -104,6 +103,16 @@ export default class HomeView extends React.Component {
             borderRadius={8}
             title="View Units"
             onPress={() => this.props.navigation.navigate('Units')}
+          />
+          <Text style={styles.text}></Text>
+          <Button
+            raised
+            fontSize={20}
+            icon={{name: 'class'}}
+            backgroundColor={'#397af8'}
+            borderRadius={8}
+            title="View Your lesson of this day"
+            onPress={() => this.props.navigation.navigate('Lesson')}
           />
         </View>
         </View>

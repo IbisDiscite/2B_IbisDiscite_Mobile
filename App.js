@@ -8,6 +8,7 @@ import HomeView from "./components/Home"
 import UnitResults from "./components/Units"
 import UnitWithId from "./components/UnitWithId"
 import Login from "./components/Login"
+import Lesson from "./components/Lesson"
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
@@ -41,7 +42,9 @@ const RootStack = StackNavigator(
     UnitId: {
       screen: UnitWithId,
     },
-
+    Lesson: {
+      screen: Lesson,
+    },
   },
   {
     initialRouteName: 'Login',

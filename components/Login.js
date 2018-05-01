@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { TouchableHighlight,TextInput ,Image, StyleSheet, Text, View, Header, ActivityIndicator } from 'react-native';
+import { TouchableHighlight,TextInput ,Image, StyleSheet, Text, View, Header, ActivityIndicator, Alert } from 'react-native';
 import {Button} from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
@@ -30,7 +30,6 @@ export default class Login extends React.Component {
       console.log(this.props)
       return (
         <View style={styles.container}>
-
           <Text style={styles.text}>Welcome to IbisDiscite, please log in</Text>
           <View style={styles.container}>
           <TextInput
@@ -53,7 +52,7 @@ export default class Login extends React.Component {
               backgroundColor={'#397af8'}
               borderRadius={8}
               title="Log in"
-              onPress={() => this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
+              onPress={() =>this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
             />
           </View>
         </View>

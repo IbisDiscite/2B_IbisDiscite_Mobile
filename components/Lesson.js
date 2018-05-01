@@ -11,7 +11,7 @@ console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
-export default class ExamplesView extends React.Component {
+export default class LessonsView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'IbisDiscite',
     headerTintColor: 'whitesmoke',
@@ -28,18 +28,15 @@ export default class ExamplesView extends React.Component {
   }
 
   componentDidMount(){
-    var request = `query{
-      exampleById(id:${this.props.navigation.state.params.id}){
-        id
-        contenido
-      }
-    }`;
-
     GlRequest(
-      request ,
+      `query{
+        allTodayslessons{
+          name
+        }
+      }`,
       (data) => {
         this.setState({
-          dataSource: data.exampleById,
+          dataSource: data.allTodayslessons,
           isLoading: false,
         })
       },
@@ -50,8 +47,8 @@ export default class ExamplesView extends React.Component {
   }
 
   render() {
-    /*console.log("PROPS DE EXAMPLES:")
-    console.log(this.props)*/
+    console.log("LESSONS")
+    console.log(this.state)
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
@@ -61,9 +58,9 @@ export default class ExamplesView extends React.Component {
     }
     return (
       <View style={styles.containerOne}>
-        <Text style={styles.text}>Showing an specific example {this.props.navigation.state.params.id}🚀</Text>
+        <Text style={styles.text}>Your Lesson For this day is</Text>
         <View style={styles.container}>
-          <Text style={styles.item}>{this.state.dataSource.contenido}🚀</Text>
+          <Text style={styles.item}>{this.state.dataSource[Math.floor(Math.random()*this.state.dataSource.length)].name}</Text>
         </View>
       </View>
     );
