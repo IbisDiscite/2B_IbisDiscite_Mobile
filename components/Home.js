@@ -5,6 +5,7 @@ import {Button} from 'react-native-elements';
 
 import HamburguerLogo from './HeaderComponents';
 import Login from './Login';
+import GlRequest from './graphQLUtils';
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
@@ -18,60 +19,67 @@ export default class HomeView extends React.Component {
     headerStyle: {
       backgroundColor: '#000158'
     },
-    /*headerRight:
-      <HamburguerLogo />,*/
   });
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true, loged: true}
+    this.state ={ isLoading: true, loged: false, error: false}
   }
 
-  /*componentDidMount(){
-    return fetch('http://35.185.3.235:4000/user_token',
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          auth: {email: this.props.navigation.state.params.user, password: this.props.navigation.state.params.pass}
-        })
-      })
-      .then((response) => {
-        response.json();
-        console.log(response.status);
+  componentDidMount(){
+    var request = `mutation{
+      createSession(session:{
+        email: "${this.props.navigation.state.params.user}"
+        password: "${this.props.navigation.state.params.pass}"
+      }) {
+        id
+        email
+      }
+    }`
+    GlRequest(
+      request ,
+      (data) => {
         this.setState({
-          status: response.status,
-        })
-        if(response.status == 201){
-          console.log("Usuario valido")
-          this.setState({
-            loged: true,
-          })
-        }
-      })
-      .then((responseJson) => {
-        this.setState({
+          dataSource: data.createSession,
           isLoading: false,
-          dataSource: responseJson,
-        }, function(){
-        });
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
-  }*/
+          loged: true,
+        })
+      },
+      (error) => {
+        console.log(error)
+        this.setState({
+          error: true,
+          isLoading: false
+        })
+      }
+    );
+    console.log("Fin request")
+  }
 
   render() {
     console.log("PROPS DEL HOME:")
     console.log(this.props)
-    /*if(this.state.isLoading){
+    if(this.state.isLoading){
       return (
         <View style={styles.container}>
           <ActivityIndicator/>
-          <Text style={styles.item}>Verificando Usuario...</Text>
+          <Text style={styles.text}>Verificando Usuario...</Text>
+        </View>
+      )
+    }
+    if(this.state.error){
+      return (
+        <View style={styles.container}>
+          <Text style={styles.text}>Correo o contraseña inválidos o vacíos...</Text>
+          <Button
+            raised
+            fontSize={20}
+            icon={{name: 'class'}}
+            backgroundColor={'#397af8'}
+            borderRadius={8}
+            title="Go Back"
+            onPress={() => this.props.navigation.navigate('Login')}
+          />
         </View>
       )
     }
@@ -80,14 +88,6 @@ export default class HomeView extends React.Component {
           <Login navigation={this.props.navigation}/>
       )
     }
-    if(this.state.status == 404){
-      return(
-        <View style={styles.container}>
-          <Text style={styles.item}>YOU ARE NOT A VALID USER!</Text>
-        </View>
-      )
-    }
-    */
     console.log(this.state)
     if(this.state.loged){
       return (
