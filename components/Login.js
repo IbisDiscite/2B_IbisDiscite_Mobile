@@ -26,8 +26,8 @@ export default class Login extends React.Component {
   }
 
   render() {
-      console.log("PROPS DEL LOGIN:")
-      console.log(this.state)
+      /*console.log("PROPS DEL LOGIN:")
+      console.log(this.state)*/
       return (
         <View style={styles.container}>
           <Text style={styles.text}>Welcome to IbisDiscite, please log in</Text>

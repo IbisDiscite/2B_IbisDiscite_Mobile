@@ -23,10 +23,12 @@ export default class HomeView extends React.Component {
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true, loged: false, error: false}
+    this.state ={ isLoading: true, isLoadingL: true, loged: false, error: false}
   }
 
   componentDidMount(){
+    var usr = `${this.props.navigation.state.params.user}`.replace("@unal.edu.co","");
+    console.log(usr);
     var request = `mutation{
       createSession(session:{
         email: "${this.props.navigation.state.params.user}"
@@ -34,6 +36,16 @@ export default class HomeView extends React.Component {
       }) {
         id
         email
+      }
+    }`
+
+    var requestLdap = `mutation {
+      auth(auth:{
+        email: "${usr}",
+        password: "${this.props.navigation.state.params.pass}"
+      }) {
+        email
+        answer
       }
     }`
     GlRequest(
@@ -53,12 +65,22 @@ export default class HomeView extends React.Component {
         })
       }
     );
-    console.log("Fin request")
+    GlRequest(
+      requestLdap ,
+      (data) => {
+        this.setState({
+          dataSourceL: data.auth,
+          isLoadingL: false,
+        })
+      },
+      (error) => {
+      }
+    );
   }
 
   render() {
-    console.log("PROPS DEL HOME:")
-    console.log(this.props)
+    /*console.log("PROPS DEL HOME:")
+    console.log(this.state)*/
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
@@ -88,8 +110,7 @@ export default class HomeView extends React.Component {
           <Login navigation={this.props.navigation}/>
       )
     }
-    console.log(this.state)
-    if(this.state.loged){
+    if(this.state.loged && (this.state.dataSourceL.answer == "true")){
       return (
         <View style={styles.containerOne}>
         <Text style={styles.text}>🚀If you wanna see all units from our App, so you can learn what you want, press here</Text>
@@ -115,6 +136,13 @@ export default class HomeView extends React.Component {
             onPress={() => this.props.navigation.navigate('Lesson')}
           />
         </View>
+        </View>
+      );
+    }
+    if(this.state.loged && (this.state.dataSourceL.answer == "false")){
+      return (
+        <View style={styles.containerOne}>
+        <Text style={styles.text}>🚀User not in ldap</Text>
         </View>
       );
     }
