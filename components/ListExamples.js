@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { List, ListItem } from 'react-native-elements'
-
-import HamburguerLogo from './HeaderComponents'
+import { List, ListItem } from 'react-native-elements';
 
 import GlRequest from './graphQLUtils';
+
+import HamburguerLogo from './HeaderComponents'
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
 const request = `query{
-    allUnits{
+    allExamples{
       id
-      nombre
+      unit_id
+      contenido
     }
 }`;
 
-
-export default class UnitResults extends React.Component {
+export default class ListExamples extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Units',
+    title: 'Examples',
     headerTintColor: 'whitesmoke',
     headerStyle: {
       backgroundColor: '#000158'
@@ -32,7 +32,7 @@ export default class UnitResults extends React.Component {
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true}
+    this.state ={ isLoading: true};
   }
 
   componentDidMount(){
@@ -40,7 +40,7 @@ export default class UnitResults extends React.Component {
       request ,
       (data) => {
         this.setState({
-          dataSource: data.allUnits,
+          dataSource: data.allExamples,
           isLoading: false,
         })
       },
@@ -51,8 +51,8 @@ export default class UnitResults extends React.Component {
   }
 
   render() {
-    console.log("PROPS DE UNITS:")
-    console.log(this.state)
+    /*console.log("PROPS DE UNIT WITH ID:")
+    console.log(this.props)*/
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
@@ -62,16 +62,15 @@ export default class UnitResults extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>🚀Wellcome to IbisDiscite, this are the units we offer to you.</Text>
-        <Text style={styles.text}>🚀If you want to view examples of an specific unit, tap on the unit you want.</Text>
+        <Text style = {styles.text}>🚀You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
         <FlatList
-          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#8a899c' } } /> }
-          data={this.state.dataSource}
+          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: 'whitesmoke' } } /> }
+          data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
           renderItem={({item}) => (
             <TouchableHighlight
-              onPress={() => this.props.navigation.navigate('UnitId', {id: item.id, name: item.nombre})}
+              onPress={() => this.props.navigation.navigate('Examples',{id: item.id})}
             >
-              <Text style={styles.item}>{item.id}: {item.nombre}</Text>
+              <Text style={styles.item}>Example {item.id}</Text>
             </TouchableHighlight>
           )}
           keyExtractor={(item, index) => index}

@@ -9,6 +9,8 @@ import UnitResults from "./components/Units"
 import UnitWithId from "./components/UnitWithId"
 import Login from "./components/Login"
 import Lesson from "./components/Lesson"
+import ListExamples from "./components/ListExamples"
+import Exercises from "./components/Exercises"
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
@@ -44,6 +46,12 @@ const RootStack = StackNavigator(
     },
     Lesson: {
       screen: Lesson,
+    },
+    ListEx: {
+      screen: ListExamples,
+    },
+    Exercises: {
+      screen: Exercises,
     },
   },
   {

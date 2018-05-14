@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { List, ListItem } from 'react-native-elements';
+import { List, ListItem, Button } from 'react-native-elements';
 
 import GlRequest from './graphQLUtils';
 
@@ -21,7 +21,7 @@ const request = `query{
 
 export default class UnitWithId extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'IbisDiscite',
+    title: 'Units',
     headerTintColor: 'whitesmoke',
     headerStyle: {
       backgroundColor: '#000158'
@@ -63,18 +63,26 @@ export default class UnitWithId extends React.Component {
     return (
       <View style={styles.container}>
         <Text style = {styles.text}>🚀You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
-        <FlatList
-          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: 'whitesmoke' } } /> }
-          data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
-          renderItem={({item}) => (
-            <TouchableHighlight
-              onPress={() => this.props.navigation.navigate('Examples',{id: item.id})}
-            >
-              <Text style={styles.item}>Ejemplo {item.id}</Text>
-            </TouchableHighlight>
-          )}
-          keyExtractor={(item, index) => index}
+        <Button
+          raised
+          fontSize={20}
+          icon={{name: 'class'}}
+          backgroundColor={'#397af8'}
+          borderRadius={8}
+          title="Examples!!"
+          onPress={() => this.props.navigation.navigate('ListEx', {id: this.props.navigation.state.params.id, name: this.props.navigation.state.params.nombre})}
         />
+        <Text style={styles.text}></Text>
+        <Button
+          raised
+          fontSize={20}
+          icon={{name: 'class'}}
+          backgroundColor={'#397af8'}
+          borderRadius={8}
+          title="Make Exercises!!"
+          onPress={() => this.props.navigation.navigate('Exercises', {id: this.props.navigation.state.params.id, name: this.props.navigation.state.params.nombre, exercise: 0})}
+        />
+
       </View>
     )
   }

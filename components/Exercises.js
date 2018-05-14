@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { List, ListItem } from 'react-native-elements'
-
-import HamburguerLogo from './HeaderComponents'
+import { List, ListItem, Button } from 'react-native-elements';
 
 import GlRequest from './graphQLUtils';
+
+import HamburguerLogo from './HeaderComponents'
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
 const request = `query{
-    allUnits{
-      id
-      nombre
-    }
+  allExercises{
+    enunciado
+    leccion
+    opc1
+    opc2
+    respuesta
+  }
 }`;
 
-
-export default class UnitResults extends React.Component {
+export default class Exercises extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Units',
+    title: 'Exercises',
     headerTintColor: 'whitesmoke',
     headerStyle: {
       backgroundColor: '#000158'
     },
-    /*headerRight:
-      <HamburguerLogo />,*/
   });
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true}
+    this.state ={ isLoading: true};
   }
 
   componentDidMount(){
@@ -40,7 +40,7 @@ export default class UnitResults extends React.Component {
       request ,
       (data) => {
         this.setState({
-          dataSource: data.allUnits,
+          dataSource: data.allExercises,
           isLoading: false,
         })
       },
@@ -50,9 +50,16 @@ export default class UnitResults extends React.Component {
     );
   }
 
+  _onPressButton(option, answer) {
+    console.log("ME PRESIONASTE OME")
+    console.log(option)
+    console.log(answer)
+    if(option == answer){
+      console.log("Correcto")
+    }
+  }
+
   render() {
-    console.log("PROPS DE UNITS:")
-    console.log(this.state)
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
@@ -60,21 +67,31 @@ export default class UnitResults extends React.Component {
         </View>
       )
     }
+    const datos = this.state.dataSource.filter((e) => e.leccion === this.props.navigation.state.params.id)
+    //console.log(datos)
+    console.log("PROPS EXERCISES")
+    console.log(this.props)
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>🚀Wellcome to IbisDiscite, this are the units we offer to you.</Text>
-        <Text style={styles.text}>🚀If you want to view examples of an specific unit, tap on the unit you want.</Text>
-        <FlatList
-          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#8a899c' } } /> }
-          data={this.state.dataSource}
-          renderItem={({item}) => (
-            <TouchableHighlight
-              onPress={() => this.props.navigation.navigate('UnitId', {id: item.id, name: item.nombre})}
-            >
-              <Text style={styles.item}>{item.id}: {item.nombre}</Text>
-            </TouchableHighlight>
-          )}
-          keyExtractor={(item, index) => index}
+        <Text style = {styles.text}>🚀Exercises!!</Text>
+        <Text style = {styles.text}>🚀{datos[this.props.navigation.state.params.exercise].enunciado}</Text>
+        <Button
+          raised
+          fontSize={20}
+          icon={{name: 'class'}}
+          backgroundColor={'#397af8'}
+          borderRadius={8}
+          title= {datos[this.props.navigation.state.params.exercise].opc1}
+          onPress={() => this._onPressButton(datos[this.props.navigation.state.params.exercise].respuesta, datos[this.props.navigation.state.params.exercise].respuesta)}
+        />
+        <Button
+          raised
+          fontSize={20}
+          icon={{name: 'class'}}
+          backgroundColor={'#397af8'}
+          borderRadius={8}
+          title= {datos[this.props.navigation.state.params.exercise].opc2}
+          onPress={() => this._onPressButton(datos[this.props.navigation.state.params.exercise].opc2, datos[this.props.navigation.state.params.exercise].respuesta)}
         />
       </View>
     )

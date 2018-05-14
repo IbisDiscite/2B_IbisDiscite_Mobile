@@ -23,7 +23,7 @@ export default class HomeView extends React.Component {
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true, isLoadingL: true, loged: false, error: false}
+    this.state ={ isLoading: true, isLoadingL: true, loged: false, error: false, answer: false}
   }
 
   componentDidMount(){
@@ -85,14 +85,14 @@ export default class HomeView extends React.Component {
       return (
         <View style={styles.container}>
           <ActivityIndicator/>
-          <Text style={styles.text}>Verificando Usuario...</Text>
+          <Text style={styles.text}>Verifying User...</Text>
         </View>
       )
     }
     if(this.state.error){
       return (
         <View style={styles.container}>
-          <Text style={styles.text}>Correo o contraseña inválidos o vacíos...</Text>
+          <Text style={styles.text}>Incorrect Email or Password</Text>
           <Button
             raised
             fontSize={20}
@@ -142,7 +142,16 @@ export default class HomeView extends React.Component {
     if(this.state.loged && (this.state.dataSourceL.answer == "false")){
       return (
         <View style={styles.containerOne}>
-        <Text style={styles.text}>🚀User not in ldap</Text>
+          <Text style={styles.text}>🚀User not in ldap</Text>
+          <Button
+            raised
+            fontSize={20}
+            icon={{name: 'class'}}
+            backgroundColor={'#397af8'}
+            borderRadius={8}
+            title="Go Back"
+            onPress={() => this.props.navigation.navigate('Login')}
+          />
         </View>
       );
     }
