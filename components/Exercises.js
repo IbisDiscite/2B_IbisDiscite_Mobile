@@ -44,7 +44,9 @@ export default class Exercises extends React.Component {
         })
       },
       (status, data) => {
-
+        console.log("ERROR")
+        console.log(status)
+        console.log(data)
       }
     );
   }
@@ -70,35 +72,54 @@ export default class Exercises extends React.Component {
       )
     }
     //console.log(datos)
-    //console.log("PROPS EXERCISES")
-    //console.log(this.props)
-    return (
-      <View style={styles.containerOne}>
-        <Text style = {styles.text}>🚀Exercises!!</Text>
-        <View style={styles.container}>
-          <Text style = {styles.text}>🚀{this.state.dataSource[this.props.navigation.state.params.exercise].enunciado}</Text>
-          <Button
-            raised
-            fontSize={20}
-            icon={{name: 'class'}}
-            backgroundColor={'#397af8'}
-            borderRadius={8}
-            title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc1}
-            onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].respuesta, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
-          />
-          <Text style={styles.text}></Text>
-          <Button
-            raised
-            fontSize={20}
-            icon={{name: 'class'}}
-            backgroundColor={'#397af8'}
-            borderRadius={8}
-            title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc2}
-            onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc2, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
-          />
+    console.log("PROPS EXERCISES")
+    console.log(this.state)
+    try{
+      return (
+        <View style={styles.containerOne}>
+            <Text style = {styles.text}>🚀Exercises!!</Text>
+            <Text style = {styles.text}>🚀On Exercise {this.props.navigation.state.params.exercise} with id {this.state.dataSource[this.props.navigation.state.params.exercise].id}</Text>
+            <View style={styles.container}>
+              <Text style = {styles.text}>🚀{this.state.dataSource[this.props.navigation.state.params.exercise].enunciado}</Text>
+              <Button
+                raised
+                fontSize={20}
+                icon={{name: 'class'}}
+                backgroundColor={'#397af8'}
+                borderRadius={8}
+                title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc1}
+                onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].respuesta, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
+              />
+              <Text style={styles.text}></Text>
+              <Button
+                raised
+                fontSize={20}
+                icon={{name: 'class'}}
+                backgroundColor={'#397af8'}
+                borderRadius={8}
+                title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc2}
+                onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc2, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
+              />
+            </View>
         </View>
-      </View>
-    )
+      )
+    } catch(err) {
+      return (
+        <View style={styles.containerOne}>
+            <Text style = {styles.text}>🚀You Correctly Finnished All This Unit Exercises!!!😱</Text>
+            <Text style = {styles.text}>🚀Wanna Go Back To Units?</Text>
+            <Button
+              raised
+              fontSize={20}
+              icon={{name: 'class'}}
+              backgroundColor={'#397af8'}
+              borderRadius={8}
+              title="Units"
+              onPress={() => this.props.navigation.navigate('Units')}
+            />
+        </View>
+      )
+    }
   }
 }
 
