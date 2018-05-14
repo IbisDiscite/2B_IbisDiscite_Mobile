@@ -11,6 +11,8 @@ import Login from "./components/Login"
 import Lesson from "./components/Lesson"
 import ListExamples from "./components/ListExamples"
 import Exercises from "./components/Exercises"
+import Correct from "./components/Correct"
+import Incorrect from "./components/Incorrect"
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
@@ -52,6 +54,12 @@ const RootStack = StackNavigator(
     },
     Exercises: {
       screen: Exercises,
+    },
+    Correct: {
+      screen: Correct,
+    },
+    Incorrect: {
+      screen: Incorrect,
     },
   },
   {

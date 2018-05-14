@@ -11,16 +11,6 @@ console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
 
-const request = `query{
-  allExercises{
-    enunciado
-    leccion
-    opc1
-    opc2
-    respuesta
-  }
-}`;
-
 export default class Exercises extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Exercises',
@@ -37,10 +27,19 @@ export default class Exercises extends React.Component {
 
   componentDidMount(){
     GlRequest(
-      request ,
+      `query{
+        exerciseByLeccion(leccion: ${this.props.navigation.state.params.id}){
+          id
+          enunciado
+          leccion
+          opc1
+          opc2
+          respuesta
+        }
+      }` ,
       (data) => {
         this.setState({
-          dataSource: data.allExercises,
+          dataSource: data.exerciseByLeccion,
           isLoading: false,
         })
       },
@@ -51,11 +50,14 @@ export default class Exercises extends React.Component {
   }
 
   _onPressButton(option, answer) {
-    console.log("ME PRESIONASTE OME")
+    /*console.log("ME PRESIONASTE OME")
     console.log(option)
-    console.log(answer)
+    console.log(answer)*/
     if(option == answer){
-      console.log("Correcto")
+      //console.log("Correcto")
+      this.props.navigation.navigate('Correct', {id: this.props.navigation.state.params.id, exercise: this.props.navigation.state.params.exercise})
+    } else {
+      this.props.navigation.navigate('Incorrect', {id: this.state.dataSource.id})
     }
   }
 
@@ -67,32 +69,34 @@ export default class Exercises extends React.Component {
         </View>
       )
     }
-    const datos = this.state.dataSource.filter((e) => e.leccion === this.props.navigation.state.params.id)
     //console.log(datos)
-    console.log("PROPS EXERCISES")
-    console.log(this.props)
+    //console.log("PROPS EXERCISES")
+    //console.log(this.props)
     return (
-      <View style={styles.container}>
+      <View style={styles.containerOne}>
         <Text style = {styles.text}>🚀Exercises!!</Text>
-        <Text style = {styles.text}>🚀{datos[this.props.navigation.state.params.exercise].enunciado}</Text>
-        <Button
-          raised
-          fontSize={20}
-          icon={{name: 'class'}}
-          backgroundColor={'#397af8'}
-          borderRadius={8}
-          title= {datos[this.props.navigation.state.params.exercise].opc1}
-          onPress={() => this._onPressButton(datos[this.props.navigation.state.params.exercise].respuesta, datos[this.props.navigation.state.params.exercise].respuesta)}
-        />
-        <Button
-          raised
-          fontSize={20}
-          icon={{name: 'class'}}
-          backgroundColor={'#397af8'}
-          borderRadius={8}
-          title= {datos[this.props.navigation.state.params.exercise].opc2}
-          onPress={() => this._onPressButton(datos[this.props.navigation.state.params.exercise].opc2, datos[this.props.navigation.state.params.exercise].respuesta)}
-        />
+        <View style={styles.container}>
+          <Text style = {styles.text}>🚀{this.state.dataSource[this.props.navigation.state.params.exercise].enunciado}</Text>
+          <Button
+            raised
+            fontSize={20}
+            icon={{name: 'class'}}
+            backgroundColor={'#397af8'}
+            borderRadius={8}
+            title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc1}
+            onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].respuesta, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
+          />
+          <Text style={styles.text}></Text>
+          <Button
+            raised
+            fontSize={20}
+            icon={{name: 'class'}}
+            backgroundColor={'#397af8'}
+            borderRadius={8}
+            title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc2}
+            onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc2, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
+          />
+        </View>
       </View>
     )
   }
@@ -104,6 +108,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#8a899c',
     justifyContent: 'center',
   },
+  containerOne: {
+    flex: 1,
+    backgroundColor: '#8a899c',
+  },
   hitext: {
     backgroundColor: 'whitesmoke',
     color: '#64FE2E',
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
   text: {
     backgroundColor: '#8a899c',
     color: 'black',
-    fontSize: 15,
+    fontSize: 20,
     padding: 10,
   },
   item: {
@@ -121,6 +129,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#397af8',
     color: 'whitesmoke',
+    fontSize: 20,
+    padding: 10,
+  },
+  enunciado: {
+    backgroundColor: '#8a899c',
+    color: 'black',
     fontSize: 20,
     padding: 10,
   },

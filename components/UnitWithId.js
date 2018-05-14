@@ -80,7 +80,7 @@ export default class UnitWithId extends React.Component {
           backgroundColor={'#397af8'}
           borderRadius={8}
           title="Make Exercises!!"
-          onPress={() => this.props.navigation.navigate('Exercises', {id: this.props.navigation.state.params.id, name: this.props.navigation.state.params.nombre, exercise: 0})}
+          onPress={() => this.props.navigation.navigate('Exercises', {id: this.props.navigation.state.params.id, exercise: 0})}
         />
 
       </View>

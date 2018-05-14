@@ -64,7 +64,7 @@ export default class ListExamples extends React.Component {
       <View style={styles.container}>
         <Text style = {styles.text}>🚀You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
         <FlatList
-          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: 'whitesmoke' } } /> }
+          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#8a899c' } } /> }
           data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
           renderItem={({item}) => (
             <TouchableHighlight
