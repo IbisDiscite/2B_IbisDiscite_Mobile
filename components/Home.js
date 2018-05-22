@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { TouchableHighlight, Image, StyleSheet, Text, View, Header, ActivityIndicator } from 'react-native';
+import { TouchableHighlight, Image, StyleSheet, Text, View, Header, ActivityIndicator, Alert } from 'react-native';
 import {Button} from 'react-native-elements';
 
 import HamburguerLogo from './HeaderComponents';
@@ -15,12 +15,13 @@ console.disableYellowBox = true;
 export default class HomeView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'IbisDiscite',
-    headerTintColor: 'whitesmoke',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
+    /*headerRight:
+      <HamburguerLogo />,*/
   });
-
   constructor(props){
     super(props);
     this.state ={ isLoading: true, isLoadingL: true, loged: false, error: false, answer: false}
@@ -58,7 +59,7 @@ export default class HomeView extends React.Component {
         })
       },
       (error) => {
-        console.log(error)
+        //console.log(error)
         this.setState({
           error: true,
           isLoading: false
@@ -83,21 +84,22 @@ export default class HomeView extends React.Component {
     console.log(this.state)*/
     if(this.state.isLoading){
       return (
-        <View style={styles.container}>
-          <ActivityIndicator/>
-          <Text style={styles.text}>Verifying User...</Text>
+        <View style={styles.containerOne}>
+          <ActivityIndicator size="large" color="#00283F"/>
+          <Text> </Text>
+          <Text style={styles.verification}>Verifying User...</Text>
         </View>
       )
     }
     if(this.state.error){
       return (
-        <View style={styles.container}>
-          <Text style={styles.text}>Incorrect Email or Password</Text>
+        <View style={styles.containerOne}>
+          <Text style={styles.verification}>Incorrect Email or Password</Text>
           <Button
             raised
             fontSize={20}
-            icon={{name: 'class'}}
-            backgroundColor={'#397af8'}
+            icon={{name: 'done'}}
+            backgroundColor={'#00283F'}
             borderRadius={8}
             title="Go Back"
             onPress={() => this.props.navigation.navigate('Login')}
@@ -112,46 +114,49 @@ export default class HomeView extends React.Component {
     }
     if(this.state.loged && (this.state.dataSourceL.answer == "true")){
       return (
-        <View style={styles.containerOne}>
-        <Text style={styles.text}>🚀If you wanna see all units from our App, so you can learn what you want, press here</Text>
-        <Text style={styles.text}>Succesfully loged in</Text>
         <View style={styles.container}>
-          <Button
-            raised
-            fontSize={20}
-            icon={{name: 'class'}}
-            backgroundColor={'#397af8'}
-            borderRadius={8}
-            title="View Units"
-            onPress={() => this.props.navigation.navigate('Units')}
-          />
-          <Text style={styles.text}></Text>
-          <Button
-            raised
-            fontSize={20}
-            icon={{name: 'class'}}
-            backgroundColor={'#397af8'}
-            borderRadius={8}
-            title="View Your lesson of this day"
-            onPress={() => this.props.navigation.navigate('Lesson')}
-          />
-        </View>
+        <Text ></Text>
+          <Text style={styles.action}> What would you like to do?</Text>
+          <View style={styles.containerOne}>
+            <Button
+              raised
+              fontSize={20}
+              icon={{name: 'class'}}
+              backgroundColor={'#00283F'}
+              borderRadius={8}
+              title="View Units"
+              onPress={() => this.props.navigation.navigate('Units')}
+            />
+            <Text></Text>
+            <Button
+              raised
+              fontSize={20}
+              icon={{name: 'class'}}
+              backgroundColor={'#00283F'}
+              borderRadius={8}
+              title="View A Random Lesson"
+              onPress={() => this.props.navigation.navigate('Lesson')}
+            />
+          </View>
         </View>
       );
     }
     if(this.state.loged && (this.state.dataSourceL.answer == "false")){
       return (
-        <View style={styles.containerOne}>
-          <Text style={styles.text}>🚀User not in ldap</Text>
-          <Button
-            raised
-            fontSize={20}
-            icon={{name: 'class'}}
-            backgroundColor={'#397af8'}
-            borderRadius={8}
-            title="Go Back"
-            onPress={() => this.props.navigation.navigate('Login')}
-          />
+        <View style={styles.container}>
+          <Text ></Text>
+          <Text style={styles.text}>This user is not registered on the ldap!</Text>
+          <View style={styles.containerOne}>
+            <Button
+              raised
+              fontSize={20}
+              icon={{name: 'done'}}
+              backgroundColor={'#00283F'}
+              borderRadius={8}
+              title="Go Back"
+              onPress={() => this.props.navigation.navigate('Login')}
+            />
+          </View>
         </View>
       );
     }
@@ -162,17 +167,31 @@ export default class HomeView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
-    justifyContent: 'center',
+    backgroundColor: '#aeaeae',
   },
   containerOne: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
+    justifyContent: 'center',
   },
   text: {
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     color: 'black',
     fontSize: 20,
     padding: 10,
   },
+  verification: {
+    backgroundColor: '#aeaeae',
+    textAlign: 'center',
+    fontSize: 25,
+    padding: 10,
+  },
+  action: {
+    color: '#0b2b3e',
+    fontSize: 20,
+    borderColor: 'black',
+    padding: 10,
+    textAlign: 'left',
+    fontWeight: 'bold',
+  }
 })

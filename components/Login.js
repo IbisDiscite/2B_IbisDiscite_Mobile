@@ -11,10 +11,10 @@ console.disableYellowBox = true;
 
 export default class Login extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'IbisDiscite',
-    headerTintColor: 'whitesmoke',
+    title: 'Login',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
     /*headerRight:
       <HamburguerLogo />,*/
@@ -30,17 +30,20 @@ export default class Login extends React.Component {
       console.log(this.state)*/
       return (
         <View style={styles.container}>
-          <Text style={styles.text}>Welcome to IbisDiscite, please log in</Text>
+          <Text> </Text>
+          <Text style={styles.tittle}>Please log in</Text>
           <View style={styles.container}>
           <TextInput
-            style={{height: 50, textAlign: 'center'}}
+            style={{height: 50, textAlign: 'center', fontSize: 20, textColor: '#0b2b3e'}}
             placeholder="Account"
+            placeholderTextColor="#0b2b3e"
             onChangeText={(user) => this.setState({user})}
           />
           <TextInput
             secureTextEntry={true}
-            style={{height: 50, textAlign: 'center'}}
+            style={{height: 50, textAlign: 'center', fontSize: 20}}
             placeholder="Password"
+            placeholderTextColor="#0b2b3e"
             onChangeText={(pass) => this.setState({pass})}
           />
           </View>
@@ -49,10 +52,20 @@ export default class Login extends React.Component {
               raised
               fontSize={20}
               icon={{name: 'launch'}}
-              backgroundColor={'#397af8'}
+              backgroundColor={'#00283F'}
               borderRadius={8}
               title="Log in"
               onPress={() =>this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
+            />
+            <Text> </Text>
+            <Button
+              raised
+              fontSize={20}
+              icon={{name: 'face'}}
+              backgroundColor={'#00283F'}
+              borderRadius={8}
+              title="About"
+              onPress={() =>this.props.navigation.navigate('About')}
             />
           </View>
         </View>
@@ -64,12 +77,8 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     justifyContent: 'center',
-  },
-  hitext: {
-    backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
   },
   text: {
     backgroundColor: '#8a899c',
@@ -78,14 +87,12 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
   },
-  item: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
+  tittle: {
+    color: '#0b2b3e',
+    fontSize:30,
+    borderColor: 'black',
     padding: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 })

@@ -21,10 +21,10 @@ const request = `query{
 
 export default class ListExamples extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Examples',
-    headerTintColor: 'whitesmoke',
+    title: 'IbisDiscite',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
     /*headerRight:
       <HamburguerLogo />,*/
@@ -62,7 +62,7 @@ export default class ListExamples extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text style = {styles.text}>🚀You are viewing the unit {this.props.navigation.state.params.id} {this.props.navigation.state.params.name}</Text>
+        <Text> </Text>
         <FlatList
           ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#8a899c' } } /> }
           data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
@@ -83,15 +83,11 @@ export default class ListExamples extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     justifyContent: 'center',
   },
-  hitext: {
-    backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
-  },
   text: {
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     color: 'black',
     fontSize: 15,
     padding: 10,

@@ -13,11 +13,13 @@ console.disableYellowBox = true;
 
 export default class Exercises extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'Exercises',
-    headerTintColor: 'whitesmoke',
+    title: 'IbisDiscite',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
+    /*headerRight:
+      <HamburguerLogo />,*/
   });
 
   constructor(props){
@@ -34,6 +36,8 @@ export default class Exercises extends React.Component {
           leccion
           opc1
           opc2
+          opc3
+          opc4
           respuesta
         }
       }` ,
@@ -72,8 +76,8 @@ export default class Exercises extends React.Component {
       )
     }
     //console.log(datos)
-    console.log("PROPS EXERCISES")
-    console.log(this.state)
+    //console.log("PROPS EXERCISES")
+    //console.log(this.state)
     try{
       return (
         <View style={styles.containerOne}>
@@ -88,7 +92,7 @@ export default class Exercises extends React.Component {
                 backgroundColor={'#397af8'}
                 borderRadius={8}
                 title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc1}
-                onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].respuesta, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
+                onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc1, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
               />
               <Text style={styles.text}></Text>
               <Button
@@ -99,6 +103,26 @@ export default class Exercises extends React.Component {
                 borderRadius={8}
                 title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc2}
                 onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc2, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
+              />
+              <Text style={styles.text}></Text>
+              <Button
+                raised
+                fontSize={20}
+                icon={{name: 'class'}}
+                backgroundColor={'#397af8'}
+                borderRadius={8}
+                title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc3}
+                onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc3, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
+              />
+              <Text style={styles.text}></Text>
+              <Button
+                raised
+                fontSize={20}
+                icon={{name: 'class'}}
+                backgroundColor={'#397af8'}
+                borderRadius={8}
+                title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc4}
+                onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc4, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
               />
             </View>
         </View>
@@ -126,19 +150,15 @@ export default class Exercises extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     justifyContent: 'center',
   },
   containerOne: {
     flex: 1,
-    backgroundColor: '#8a899c',
-  },
-  hitext: {
-    backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
+    backgroundColor: '#aeaeae',
   },
   text: {
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     color: 'black',
     fontSize: 20,
     padding: 10,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { List, ListItem } from 'react-native-elements'
+import { List, ListItem, Button } from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
 
@@ -13,10 +13,10 @@ console.disableYellowBox = true;
 
 export default class LessonsView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'IbisDiscite',
-    headerTintColor: 'whitesmoke',
+    title: 'Lesson',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
     /*headerRight:
       <HamburguerLogo />,*/
@@ -32,6 +32,8 @@ export default class LessonsView extends React.Component {
       `query{
         allTodayslessons{
           name
+          unit_id
+          description
         }
       }`,
       (data) => {
@@ -47,8 +49,8 @@ export default class LessonsView extends React.Component {
   }
 
   render() {
-    console.log("LESSONS")
-    console.log(this.state)
+    //console.log("LESSONS")
+    //console.log(this.state)
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
@@ -56,12 +58,27 @@ export default class LessonsView extends React.Component {
         </View>
       )
     }
+    if(this.state.isLoading == false){
+        var rand = Math.floor(Math.random()*this.state.dataSource.length)
+    }
     return (
-      <View style={styles.containerOne}>
-        <Text style={styles.text}>Your Lesson For this day is</Text>
-        <View style={styles.container}>
-          <Text style={styles.item}>{this.state.dataSource[Math.floor(Math.random()*this.state.dataSource.length)].name}</Text>
-        </View>
+      <View style={styles.container}>
+        <Text></Text>
+        <Text style={styles.text}>Here is a random lesson!</Text>
+        <Text></Text>
+        <Text style={styles.text}>{this.state.dataSource[rand].name}:</Text>
+        <Text></Text>
+        <Text style={styles.text}>{this.state.dataSource[rand].description}</Text>
+        <Text></Text>
+        <Button
+          raised
+          fontSize={20}
+          icon={{name: 'class'}}
+          backgroundColor={'#00283F'}
+          borderRadius={8}
+          title="View Units"
+          onPress={() => this.props.navigation.navigate('Units')}
+        />
       </View>
     );
   }
@@ -71,41 +88,18 @@ export default class LessonsView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
-    justifyContent: 'center',
+    backgroundColor: '#aeaeae',
   },
   containerOne: {
     flex: 1,
-    backgroundColor: '#8a899c',
-  },
-  hitext: {
-    backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
+    backgroundColor: '#aeaeae',
+    justifyContent: 'center',
   },
   text: {
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     color: 'black',
     fontSize: 20,
     padding: 10,
+    left: 10,
   },
-  item: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
-    padding: 10,
-  },
-  log: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
-    padding: 10,
-  }
 })

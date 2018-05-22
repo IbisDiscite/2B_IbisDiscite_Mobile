@@ -14,9 +14,9 @@ console.disableYellowBox = true;
 export default class ExamplesView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'IbisDiscite',
-    headerTintColor: 'whitesmoke',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
     /*headerRight:
       <HamburguerLogo />,*/
@@ -74,19 +74,19 @@ export default class ExamplesView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     justifyContent: 'center',
   },
   containerOne: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
   },
   hitext: {
     backgroundColor: 'whitesmoke',
     color: '#64FE2E',
   },
   text: {
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     color: 'black',
     fontSize: 20,
     padding: 10,

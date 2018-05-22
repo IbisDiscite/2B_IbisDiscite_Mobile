@@ -22,9 +22,9 @@ const request = `query{
 export default class UnitResults extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Units',
-    headerTintColor: 'whitesmoke',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
     /*headerRight:
       <HamburguerLogo />,*/
@@ -51,21 +51,23 @@ export default class UnitResults extends React.Component {
   }
 
   render() {
-    console.log("PROPS DE UNITS:")
-    console.log(this.state)
+    //console.log("PROPS DE UNITS:")
+    //console.log(this.state)
     if(this.state.isLoading){
       return (
-        <View style={styles.container}>
-          <ActivityIndicator size="large" color="whitesmoke"/>
+        <View style={styles.containerOne}>
+          <ActivityIndicator size="large" color="#00283F"/>
+          <Text> </Text>
+          <Text style={styles.log}>Loading Units...</Text>
         </View>
       )
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>🚀Wellcome to IbisDiscite, this are the units we offer to you.</Text>
-        <Text style={styles.text}>🚀If you want to view examples of an specific unit, tap on the unit you want.</Text>
+        <Text style={styles.text}>We ofer you these units...</Text>
+        <Text style={styles.text}>Scroll down</Text>
         <FlatList
-          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#8a899c' } } /> }
+          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#aeaeae' } } /> }
           data={this.state.dataSource}
           renderItem={({item}) => (
             <TouchableHighlight
@@ -76,6 +78,8 @@ export default class UnitResults extends React.Component {
           )}
           keyExtractor={(item, index) => index}
         />
+        <Text> </Text>
+        <Text> </Text>
       </View>
     )
   }
@@ -84,37 +88,35 @@ export default class UnitResults extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
+  },
+  containerOne: {
+    flex: 1,
+    backgroundColor: '#aeaeae',
     justifyContent: 'center',
   },
-  hitext: {
-    backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
-  },
   text: {
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     color: 'black',
-    fontSize: 15,
+    fontSize: 20,
     padding: 10,
+    textAlign: 'auto',
   },
   item: {
-    textAlign: 'center',
+    textAlign: 'left',
     left: 8,
     right: 15,
     borderRadius: 5,
-    backgroundColor: '#397af8',
+    backgroundColor: '#00283F',
     color: 'whitesmoke',
     fontSize: 20,
     padding: 10,
   },
   log: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
+    backgroundColor: '#aeaeae',
+    color: 'black',
     fontSize: 20,
     padding: 10,
+    textAlign: 'center',
   }
 })

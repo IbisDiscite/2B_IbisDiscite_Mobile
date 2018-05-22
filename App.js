@@ -13,6 +13,7 @@ import ListExamples from "./components/ListExamples"
 import Exercises from "./components/Exercises"
 import Correct from "./components/Correct"
 import Incorrect from "./components/Incorrect"
+import About from "./components/About"
 
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
@@ -60,6 +61,9 @@ const RootStack = StackNavigator(
     },
     Incorrect: {
       screen: Incorrect,
+    },
+    About: {
+      screen: About,
     },
   },
   {
