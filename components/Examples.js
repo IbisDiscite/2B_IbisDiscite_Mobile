@@ -13,7 +13,7 @@ console.disableYellowBox = true;
 
 export default class ExamplesView extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'IbisDiscite',
+    title: 'Examples',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: '#565656'
@@ -55,15 +55,17 @@ export default class ExamplesView extends React.Component {
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator size="large" color="#00283F"/>
+          <Text> </Text>
+          <Text style={styles.verification}>Loading Example...</Text>
         </View>
       )
     }
     return (
       <View style={styles.containerOne}>
-        <Text style={styles.text}>Showing an specific example {this.props.navigation.state.params.id}🚀</Text>
-        <View style={styles.container}>
-          <Text style={styles.item}>{this.state.dataSource.contenido}🚀</Text>
+        <Text style={styles.title}>Example {this.props.navigation.state.params.id}:</Text>
+        <View style={styles.containerOne}>
+          <Text style={styles.text}>{this.state.dataSource.contenido}</Text>
         </View>
       </View>
     );
@@ -76,39 +78,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#aeaeae',
     justifyContent: 'center',
+    borderColor: '#397af8',
   },
   containerOne: {
     flex: 1,
     backgroundColor: '#aeaeae',
   },
-  hitext: {
-    backgroundColor: 'whitesmoke',
-    color: '#64FE2E',
+  title: {
+    backgroundColor: '#aeaeae',
+    color: 'black',
+    fontSize: 26,
+    fontWeight: 'bold',
+    padding: 10,
   },
   text: {
     backgroundColor: '#aeaeae',
     color: 'black',
-    fontSize: 20,
+    fontSize: 25,
+    fontStyle: 'italic',
     padding: 10,
   },
-  item: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
-    padding: 10,
-  },
-  log: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
-    padding: 10,
-  }
 })

@@ -21,7 +21,7 @@ const request = `query{
 
 export default class ListExamples extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'IbisDiscite',
+    title: 'Examples',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: '#565656'
@@ -56,7 +56,9 @@ export default class ListExamples extends React.Component {
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
-          <ActivityIndicator size="large" color="whitesmoke"/>
+          <ActivityIndicator size="large" color="#00283F"/>
+          <Text> </Text>
+          <Text style={styles.verification}>Loading Examples...</Text>
         </View>
       )
     }
@@ -64,7 +66,7 @@ export default class ListExamples extends React.Component {
       <View style={styles.container}>
         <Text> </Text>
         <FlatList
-          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#8a899c' } } /> }
+          ItemSeparatorComponent={ () => <View style={ { width: 10, height: 10, backgroundColor: '#aeaeae' } } /> }
           data={this.state.dataSource.filter((e) => e.unit_id === this.props.navigation.state.params.id)}
           renderItem={({item}) => (
             <TouchableHighlight
@@ -92,24 +94,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 10,
   },
-  item: {
+  verification: {
+    backgroundColor: '#aeaeae',
     textAlign: 'center',
+    fontSize: 25,
+    padding: 10,
+  },
+  item: {
+    textAlign: 'left',
     left: 8,
     right: 15,
     borderRadius: 5,
-    backgroundColor: '#397af8',
+    backgroundColor: '#00283F',
     color: 'whitesmoke',
     fontSize: 20,
     padding: 10,
   },
-  log: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
-    padding: 10,
-  }
 })

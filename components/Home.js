@@ -25,6 +25,13 @@ export default class HomeView extends React.Component {
   constructor(props){
     super(props);
     this.state ={ isLoading: true, isLoadingL: true, loged: false, error: false, answer: false}
+    Alert.alert(
+      'Welcome',
+      'We are glad you are with us!',
+      [
+        {text: 'Begin'},
+      ]
+    )
   }
 
   componentDidMount(){
@@ -115,7 +122,9 @@ export default class HomeView extends React.Component {
     if(this.state.loged && (this.state.dataSourceL.answer == "true")){
       return (
         <View style={styles.container}>
-        <Text ></Text>
+          <Text ></Text>
+          <Text></Text>
+          <Text></Text>
           <Text style={styles.action}> What would you like to do?</Text>
           <View style={styles.containerOne}>
             <Button
@@ -188,10 +197,10 @@ const styles = StyleSheet.create({
   },
   action: {
     color: '#0b2b3e',
-    fontSize: 20,
+    fontSize: 25,
     borderColor: 'black',
     padding: 10,
-    textAlign: 'left',
+    textAlign: 'center',
     fontWeight: 'bold',
   }
 })

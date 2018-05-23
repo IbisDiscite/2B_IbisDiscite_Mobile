@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { TouchableHighlight, FlatList, AppRegistry, Text, View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { List, ListItem, Button } from 'react-native-elements';
 
@@ -13,7 +13,7 @@ console.disableYellowBox = true;
 
 export default class Exercises extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'IbisDiscite',
+    title: 'Exercises',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: '#565656'
@@ -61,9 +61,16 @@ export default class Exercises extends React.Component {
     console.log(answer)*/
     if(option == answer){
       //console.log("Correcto")
-      this.props.navigation.navigate('Correct', {id: this.props.navigation.state.params.id, exercise: this.props.navigation.state.params.exercise})
+      Alert.alert(
+        'Answer',
+        'Correct!',
+      )
+      this.props.navigation.navigate('Exercises', {id: this.props.navigation.state.params.id, exercise: this.props.navigation.state.params.exercise + 1})
     } else {
-      this.props.navigation.navigate('Incorrect', {id: this.state.dataSource.id})
+      Alert.alert(
+        'Answer',
+        'Incorrect!',
+      )
     }
   }
 
@@ -71,7 +78,9 @@ export default class Exercises extends React.Component {
     if(this.state.isLoading){
       return (
         <View style={styles.container}>
-          <ActivityIndicator size="large" color="whitesmoke"/>
+          <ActivityIndicator size="large" color="#00283F"/>
+          <Text> </Text>
+          <Text style={styles.verification}>Loading Exercises...</Text>
         </View>
       )
     }
@@ -81,15 +90,15 @@ export default class Exercises extends React.Component {
     try{
       return (
         <View style={styles.containerOne}>
-            <Text style = {styles.text}>🚀Exercises!!</Text>
-            <Text style = {styles.text}>🚀On Exercise {this.props.navigation.state.params.exercise} with id {this.state.dataSource[this.props.navigation.state.params.exercise].id}</Text>
+            <Text style = {styles.title}>Exercise {this.props.navigation.state.params.exercise + 1} {this.state.dataSource.id}</Text>
+            <Text> </Text>
+            <Text style = {styles.enunciado}>{this.state.dataSource[this.props.navigation.state.params.exercise].enunciado}:</Text>
             <View style={styles.container}>
-              <Text style = {styles.text}>🚀{this.state.dataSource[this.props.navigation.state.params.exercise].enunciado}</Text>
               <Button
                 raised
                 fontSize={20}
-                icon={{name: 'class'}}
-                backgroundColor={'#397af8'}
+                icon={{name: 'done'}}
+                backgroundColor={'#00283F'}
                 borderRadius={8}
                 title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc1}
                 onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc1, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
@@ -98,8 +107,8 @@ export default class Exercises extends React.Component {
               <Button
                 raised
                 fontSize={20}
-                icon={{name: 'class'}}
-                backgroundColor={'#397af8'}
+                icon={{name: 'done'}}
+                backgroundColor={'#00283F'}
                 borderRadius={8}
                 title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc2}
                 onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc2, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
@@ -108,8 +117,8 @@ export default class Exercises extends React.Component {
               <Button
                 raised
                 fontSize={20}
-                icon={{name: 'class'}}
-                backgroundColor={'#397af8'}
+                icon={{name: 'done'}}
+                backgroundColor={'#00283F'}
                 borderRadius={8}
                 title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc3}
                 onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc3, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
@@ -118,8 +127,8 @@ export default class Exercises extends React.Component {
               <Button
                 raised
                 fontSize={20}
-                icon={{name: 'class'}}
-                backgroundColor={'#397af8'}
+                icon={{name: 'done'}}
+                backgroundColor={'#00283F'}
                 borderRadius={8}
                 title= {this.state.dataSource[this.props.navigation.state.params.exercise].opc4}
                 onPress={() => this._onPressButton(this.state.dataSource[this.props.navigation.state.params.exercise].opc4, this.state.dataSource[this.props.navigation.state.params.exercise].respuesta)}
@@ -129,18 +138,20 @@ export default class Exercises extends React.Component {
       )
     } catch(err) {
       return (
-        <View style={styles.containerOne}>
-            <Text style = {styles.text}>🚀You Correctly Finnished All This Unit Exercises!!!😱</Text>
-            <Text style = {styles.text}>🚀Wanna Go Back To Units?</Text>
-            <Button
-              raised
-              fontSize={20}
-              icon={{name: 'class'}}
-              backgroundColor={'#397af8'}
-              borderRadius={8}
-              title="Units"
-              onPress={() => this.props.navigation.navigate('Units')}
-            />
+        <View style={styles.container}>
+            <Text style = {styles.text}>You Correctly Finnished All This Unit Exercises!!!</Text>
+            <Text style = {styles.text}>Wanna Go Back To Units?</Text>
+            <View style={styles.containerOne}>
+              <Button
+                raised
+                fontSize={20}
+                icon={{name: 'class'}}
+                backgroundColor={'#00283F'}
+                borderRadius={8}
+                title="Units"
+                onPress={() => this.props.navigation.navigate('Units')}
+              />
+            </View>
         </View>
       )
     }
@@ -152,6 +163,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#aeaeae',
     justifyContent: 'center',
+    borderColor: '#397af8',
+    borderWidth: 0.5,
+    borderColor: '#00283F',
+  },
+  verification: {
+    backgroundColor: '#aeaeae',
+    textAlign: 'center',
+    fontSize: 25,
+    padding: 10,
   },
   containerOne: {
     flex: 1,
@@ -163,30 +183,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
   },
-  item: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
-    padding: 10,
-  },
   enunciado: {
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     color: 'black',
     fontSize: 20,
     padding: 10,
+    fontWeight: 'bold',
   },
-  log: {
-    textAlign: 'center',
-    left: 8,
-    right: 15,
-    borderRadius: 5,
-    backgroundColor: '#397af8',
-    color: 'whitesmoke',
-    fontSize: 20,
+  title: {
+    backgroundColor: '#aeaeae',
+    color: '#00283F',
+    fontSize: 28,
     padding: 10,
-  }
+    fontWeight: 'bold',
+  },
 })

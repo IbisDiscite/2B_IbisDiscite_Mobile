@@ -58,7 +58,7 @@ export default class UnitResults extends React.Component {
         <View style={styles.containerOne}>
           <ActivityIndicator size="large" color="#00283F"/>
           <Text> </Text>
-          <Text style={styles.log}>Loading Units...</Text>
+          <Text style={styles.verification}>Loading Units...</Text>
         </View>
       )
     }
@@ -95,6 +95,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#aeaeae',
     justifyContent: 'center',
   },
+  verification: {
+    backgroundColor: '#aeaeae',
+    textAlign: 'center',
+    fontSize: 25,
+    padding: 10,
+  },
   text: {
     backgroundColor: '#aeaeae',
     color: 'black',
@@ -112,11 +118,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 10,
   },
-  log: {
-    backgroundColor: '#aeaeae',
-    color: 'black',
-    fontSize: 20,
-    padding: 10,
-    textAlign: 'center',
-  }
 })

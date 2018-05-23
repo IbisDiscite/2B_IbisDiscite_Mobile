@@ -14,9 +14,9 @@ console.disableYellowBox = true;
 export default class Incorrect extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Exercises',
-    headerTintColor: 'whitesmoke',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
   });
 
@@ -26,8 +26,8 @@ export default class Incorrect extends React.Component {
 
   render() {
     return (
-      <View style={styles.containerOne}>
-        <Text style = {styles.text}>🚀Incorrect answer!!</Text>
+      <View style={styles.container}>
+        <Text style = {styles.text}>Incorrect answer!!</Text>
       </View>
     )
   }
@@ -36,17 +36,15 @@ export default class Incorrect extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     justifyContent: 'center',
   },
-  containerOne: {
-    flex: 1,
-    backgroundColor: '#8a899c',
-  },
   text: {
-    backgroundColor: '#8a899c',
-    color: 'black',
-    fontSize: 20,
+    backgroundColor: '#aeaeae',
+    textAlign: 'center',
+    color: '#00283F',
+    fontSize: 30,
     padding: 10,
+    fontWeight: 'bold',
   },
 })

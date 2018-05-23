@@ -21,7 +21,7 @@ const request = `query{
 
 export default class UnitWithId extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: 'IbisDiscite',
+    title: 'Units',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: '#565656'
@@ -63,7 +63,9 @@ export default class UnitWithId extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text style = {styles.action}>Welcome to unit {this.props.navigation.state.params.id}, {this.props.navigation.state.params.name}!</Text>
+        <Text> </Text>
+        <Text> </Text>
+        <Text style = {styles.action}>{this.props.navigation.state.params.name}!</Text>
         <View style={styles.containerOne}>
           <Button
             raised
@@ -81,7 +83,7 @@ export default class UnitWithId extends React.Component {
             icon={{name: 'class'}}
             backgroundColor={'#00283F'}
             borderRadius={8}
-            title="Make Exercises!!"
+            title="Exercises!!"
             onPress={() => this.props.navigation.navigate('Exercises', {id: this.props.navigation.state.params.id, exercise: 0})}
           />
         </View>
@@ -114,10 +116,10 @@ const styles = StyleSheet.create({
   },
   action: {
     color: '#0b2b3e',
-    fontSize: 20,
+    fontSize: 30,
     borderColor: 'black',
     padding: 10,
-    textAlign: 'left',
+    textAlign: 'center',
     fontWeight: 'bold',
   }
 })

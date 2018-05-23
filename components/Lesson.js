@@ -53,8 +53,10 @@ export default class LessonsView extends React.Component {
     //console.log(this.state)
     if(this.state.isLoading){
       return (
-        <View style={styles.container}>
-          <ActivityIndicator />
+        <View style={styles.containerOne}>
+          <ActivityIndicator size="large" color="#00283F"/>
+          <Text> </Text>
+          <Text style={styles.verification}>Loading Lesson...</Text>
         </View>
       )
     }
@@ -94,6 +96,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#aeaeae',
     justifyContent: 'center',
+  },
+  verification: {
+    backgroundColor: '#aeaeae',
+    textAlign: 'center',
+    fontSize: 25,
+    padding: 10,
   },
   text: {
     backgroundColor: '#aeaeae',

@@ -14,9 +14,9 @@ console.disableYellowBox = true;
 export default class Correct extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Exercises',
-    headerTintColor: 'whitesmoke',
+    headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: '#000158'
+      backgroundColor: '#565656'
     },
   });
 
@@ -27,17 +27,19 @@ export default class Correct extends React.Component {
   render() {
     var exer = this.props.navigation.state.params.exercise + 1;
     return (
-      <View style={styles.containerOne}>
-        <Text style = {styles.text}>🚀Correct answer!!</Text>
-        <Button
-          raised
-          fontSize={20}
-          icon={{name: 'class'}}
-          backgroundColor={'#397af8'}
-          borderRadius={8}
-          title="Continue?"
-          onPress={() => this.props.navigation.navigate('Exercises', {id: this.props.navigation.state.params.id, exercise: exer})}
-        />
+      <View style={styles.container}>
+        <Text style = {styles.text}>Correct answer!!</Text>
+        <View style={styles.container}>
+          <Button
+            raised
+            fontSize={20}
+            icon={{name: 'forward'}}
+            backgroundColor={'#00283F'}
+            borderRadius={8}
+            title="Continue?"
+            onPress={() => this.props.navigation.navigate('Exercises', {id: this.props.navigation.state.params.id, exercise: exer})}
+          />
+        </View>
       </View>
     )
   }
@@ -46,17 +48,15 @@ export default class Correct extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8a899c',
+    backgroundColor: '#aeaeae',
     justifyContent: 'center',
   },
-  containerOne: {
-    flex: 1,
-    backgroundColor: '#8a899c',
-  },
   text: {
-    backgroundColor: '#8a899c',
-    color: 'black',
-    fontSize: 20,
+    backgroundColor: '#aeaeae',
+    textAlign: 'center',
+    color: '#00283F',
+    fontSize: 30,
     padding: 10,
+    fontWeight: 'bold',
   },
 })

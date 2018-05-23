@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { TouchableHighlight,TextInput ,Image, StyleSheet, Text, View, Header, ActivityIndicator, Alert } from 'react-native';
-import {Button} from 'react-native-elements'
+import {Button, Icon} from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
 
@@ -47,7 +47,7 @@ export default class Login extends React.Component {
             onChangeText={(pass) => this.setState({pass})}
           />
           </View>
-          <View style={styles.container}>
+          <View style={styles.optionsContainer}>
             <Button
               raised
               fontSize={20}
@@ -55,7 +55,34 @@ export default class Login extends React.Component {
               backgroundColor={'#00283F'}
               borderRadius={8}
               title="Log in"
-              onPress={() =>this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
+              //onPress={() =>this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
+              onPress={() => {
+                if(this.state.user.length === 0 && this.state.pass.length === 0){
+                  Alert.alert(
+                    'Warning!',
+                    'User cannot be blank!\nPassword cannot be blank!'
+                  )
+                }else if(this.state.pass.length === 0){
+                  Alert.alert(
+                    'Warning!',
+                    'Password cannot be blank!'
+                  )
+                }else if(this.state.user.length === 0){
+                  Alert.alert(
+                    'Warning!',
+                    'User cannot be blank!'
+                  )
+                }else {
+                  Alert.alert(
+                    'Confirmation:',
+                    `Email: ${this.state.user}\nPassword: ${this.state.pass}`,
+                    [
+                      {text: 'Cancel'},
+                      {text: 'Go!', onPress: () =>this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})},
+                    ]
+                  )
+                }
+              }}
             />
             <Text> </Text>
             <Button
@@ -79,6 +106,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#aeaeae',
     justifyContent: 'center',
+  },
+  optionsContainer: {
+    flex: 1,
+    backgroundColor: '#aeaeae',
   },
   text: {
     backgroundColor: '#8a899c',
