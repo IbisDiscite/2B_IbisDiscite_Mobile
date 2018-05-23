@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { TouchableHighlight, Image, StyleSheet, Text, View, Header, ActivityIndicator, Alert } from 'react-native';
+import { TouchableHighlight, Image, StyleSheet, Text, View, Header, ActivityIndicator, Alert, AsyncStorage } from 'react-native';
 import {Button} from 'react-native-elements';
 
 import HamburguerLogo from './HeaderComponents';
@@ -36,7 +36,12 @@ export default class HomeView extends React.Component {
 
   componentDidMount(){
     var usr = `${this.props.navigation.state.params.user}`.replace("@unal.edu.co","");
-    console.log(usr);
+    //console.log(usr);
+    AsyncStorage.getItem("@user").then((value) => {
+            var usr = value
+            console.log("a ver alv")
+            console.log(value)
+    }).done();
     var request = `mutation{
       createSession(session:{
         email: "${this.props.navigation.state.params.user}"
@@ -64,6 +69,8 @@ export default class HomeView extends React.Component {
           isLoading: false,
           loged: true,
         })
+        AsyncStorage.setItem("@loged", `${this.state.dataSource.email}`);
+        AsyncStorage.setItem("@session", `${this.props.navigation.state.params.pass}`);
       },
       (error) => {
         //console.log(error)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
-import { TouchableHighlight,TextInput ,Image, StyleSheet, Text, View, Header, ActivityIndicator, Alert } from 'react-native';
+import { TouchableHighlight,TextInput ,Image, StyleSheet, Text, View, Header, ActivityIndicator, Alert, AsyncStorage } from 'react-native';
 import {Button, Icon} from 'react-native-elements'
 
 import HamburguerLogo from './HeaderComponents'
@@ -23,11 +23,47 @@ export default class Login extends React.Component {
   constructor(props){
     super(props);
     this.state ={ isLoading: true, user: '', pass: ''}
+    AsyncStorage.getItem("@loged").then((value) => {
+        this.setState({
+          usr: value
+        })
+    }).done();
+    AsyncStorage.getItem("@session").then((value) => {
+        this.setState({
+          sess: value
+        })
+    }).done();
   }
 
   render() {
       /*console.log("PROPS DEL LOGIN:")
       console.log(this.state)*/
+      if(this.state.usr != null && this.state.sess != null){
+        console.log("usuario")
+        console.log(this.state.usr)
+        console.log("contraseña")
+        console.log(this.state.sess)
+        this.props.navigation.navigate('Home',{user: this.state.usr, pass: this.state.sess})
+        return(
+          <View style={styles.container}>
+            <Text style={styles.tittle}>Are You Sure You Want To Sign Out?</Text>
+            <Button
+              raised
+              fontSize={20}
+              icon={{name: 'launch'}}
+              backgroundColor={'#00283F'}
+              borderRadius={8}
+              title="Sign Out"
+              //onPress={() =>this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
+              onPress={() => {
+                AsyncStorage.removeItem("@loged");
+                AsyncStorage.removeItem("session");
+                this.props.navigation.navigate('Login');
+              }}
+            />
+          </View>
+        )
+      }
       return (
         <View style={styles.container}>
           <Text> </Text>
@@ -73,6 +109,7 @@ export default class Login extends React.Component {
                     'User cannot be blank!'
                   )
                 }else {
+                  AsyncStorage.setItem("@user", `${this.state.user}`);
                   Alert.alert(
                     'Confirmation:',
                     `Email: ${this.state.user}\nPassword: ${this.state.pass}`,
