@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { ApolloClient} from 'apollo-client';
 
 import ExamplesView from "./components/Examples"
 import HomeView from "./components/Home"
