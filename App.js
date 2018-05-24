@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons';
+import MaterialIcons from 'react-native-vector-icons/Fonts/MaterialIcons.ttf'
+
+import { AppLoading, Font } from 'expo';
 
 import ExamplesView from "./components/Examples"
 import HomeView from "./components/Home"
@@ -21,7 +25,25 @@ console.disableYellowBox = true;
 
 
 export default class App extends React.Component {
+  state = {
+    fontLoaded: false,
+  }
+
+  async componentWillMount(){
+    try{
+      await Font.loadAsync({
+        MaterialIcons,
+      });
+      this.setState({fontLoaded: true});
+    }catch(error){
+      console.log('error loading icon fonts', error)
+    }
+  }
+
   render() {
+    if(!this.state.fontLoaded){
+      return <AppLoading/>
+    }
     return (
         <RootStack />
     );
