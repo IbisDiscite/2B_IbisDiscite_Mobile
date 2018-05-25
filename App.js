@@ -17,7 +17,7 @@ import Exercises from "./components/Exercises"
 import Correct from "./components/Correct"
 import Incorrect from "./components/Incorrect"
 import About from "./components/About"
-
+import Load from "./components/Load"
 console.disableWarnings = true;
 require("ReactFeatureFlags").warnAboutDeprecatedLifecycles = false;
 console.disableYellowBox = true;
@@ -27,6 +27,7 @@ console.disableYellowBox = true;
 export default class App extends React.Component {
   state = {
     fontLoaded: false,
+    isReady: false,
   }
 
   async componentWillMount(){
@@ -40,9 +41,26 @@ export default class App extends React.Component {
     }
   }
 
+  async _cacheResourcesAsync() {
+    const images = [
+      require('./images/ibis.png'),
+    ];
+
+    const cacheImages = images.map((image) => {
+      return Asset.fromModule(image).downloadAsync();
+    });
+    return Promise.all(cacheImages)
+  }
+
   render() {
     if(!this.state.fontLoaded){
-      return <AppLoading/>
+        return (
+          <AppLoading
+            startAsync={this._cacheResourcesAsync}
+            onFinish={() => this.setState({ isReady: true })}
+            onError={console.warn}
+          />
+        )
     }
     return (
         <RootStack />

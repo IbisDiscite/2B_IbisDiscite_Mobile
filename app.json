@@ -1,6 +1,10 @@
 {
   "expo": {
     "name": "Ibis Discite",
-    "sdkVersion": "26.0.0"
+    "sdkVersion": "26.0.0",
+    "loading": {
+      "hideExponentText": false,
+      "backgroundImage": "./images/ibis.png",
+    },
   }
 }
