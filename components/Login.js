@@ -23,27 +23,33 @@ export default class Login extends React.Component {
   constructor(props){
     super(props);
     this.state ={ isLoading: true, user: '', pass: ''}
-    AsyncStorage.getItem("@loged").then((value) => {
+    try{
+      AsyncStorage.getItem("token").then((value) => {
+          this.setState({
+            token: value
+          })
+      }).done();
+    }catch(error){
+      console.log("ERROR: ", error)
+    }
+    AsyncStorage.getItem("client").then((value) => {
         this.setState({
-          usr: value
+          client: value
         })
     }).done();
-    AsyncStorage.getItem("@session").then((value) => {
+    AsyncStorage.getItem("uid").then((value) => {
         this.setState({
-          sess: value
+          uid: value
         })
     }).done();
+    console.log("tok: ", this.state)
   }
 
   render() {
       /*console.log("PROPS DEL LOGIN:")
       console.log(this.state)*/
-      if(this.state.usr != null && this.state.sess != null){
-        console.log("usuario")
-        console.log(this.state.usr)
-        console.log("contraseña")
-        console.log(this.state.sess)
-        this.props.navigation.navigate('Home',{user: this.state.usr, pass: this.state.sess})
+      if(this.state.token != null && this.state.client != null && this.state.uid != null){
+        this.props.navigation.navigate('Home',{client: this.state.client, token: this.state.token, uid: this.state.uid})
         return(
           <View style={styles.container}>
             <Text style={styles.tittle}>Are You Sure You Want To Sign Out?</Text>
@@ -56,8 +62,9 @@ export default class Login extends React.Component {
               title="Sign Out"
               //onPress={() =>this.props.navigation.navigate('Home',{user: this.state.user, pass: this.state.pass})}
               onPress={() => {
-                AsyncStorage.removeItem("@loged");
-                AsyncStorage.removeItem("session");
+                AsyncStorage.removeItem("client");
+                AsyncStorage.removeItem("token");
+                AsyncStorage.removeItem("uid");
                 this.props.navigation.navigate('Login');
               }}
             />
@@ -70,7 +77,7 @@ export default class Login extends React.Component {
           <Text style={styles.tittle}>Please log in</Text>
           <View style={styles.container}>
           <TextInput
-            style={{height: 50, textAlign: 'center', fontSize: 20, textColor: '#0b2b3e'}}
+            style={{height: 50, textAlign: 'center', fontSize: 20}}
             placeholder="Account"
             placeholderTextColor="#0b2b3e"
             onChangeText={(user) => this.setState({user})}

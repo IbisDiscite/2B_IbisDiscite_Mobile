@@ -24,7 +24,7 @@ export default class HomeView extends React.Component {
   });
   constructor(props){
     super(props);
-    this.state ={ isLoading: true, isLoadingL: true, loged: false, error: false, answer: false}
+    this.state ={ isLoading: true, isLoadingL: true, loged: false, error: false, answer: "true"}
     Alert.alert(
       'Welcome',
       'We are glad you are with us!',
@@ -37,11 +37,6 @@ export default class HomeView extends React.Component {
   componentDidMount(){
     var usr = `${this.props.navigation.state.params.user}`.replace("@unal.edu.co","");
     //console.log(usr);
-    AsyncStorage.getItem("@user").then((value) => {
-            var usr = value
-            console.log("a ver alv")
-            console.log(value)
-    }).done();
     var request = `mutation{
       createSession(session:{
         email: "${this.props.navigation.state.params.user}"
@@ -49,6 +44,8 @@ export default class HomeView extends React.Component {
       }) {
         id
         email
+        token
+        client
       }
     }`
 
@@ -61,16 +58,65 @@ export default class HomeView extends React.Component {
         answer
       }
     }`
+
+    var validate = `query{
+      validateToken(headers:{
+        client: "${this.props.navigation.state.params.client}",
+        token: "${this.props.navigation.state.params.token}",
+        uid: "${this.props.navigation.state.params.uid}"
+      }){
+        id
+        email
+        type
+        email
+        nickname
+      }
+    }`
+    console.log("------------------------------------------------")
+    console.log("DASDASD",this.props.navigation.state.params.client)
+    console.log("DASDASD",this.props.navigation.state.params.token)
+    console.log("DASDASD",this.props.navigation.state.params.uid)
+    console.log("------------------------------------------------")
+    if(this.props.navigation.state.params.client == null && this.props.navigation.state.params.token == null && this.props.navigation.state.params.uid == null){
+      GlRequest(
+        request ,
+        (data) => {
+          this.setState({
+            dataSource: data.createSession,
+            isLoading: false,
+          })
+          GlRequest(
+            requestLdap ,
+            (data) => {
+              this.setState({
+                dataSourceL: data.auth,
+                isLoadingL: false,
+                loged: true,
+              })
+            },
+            (error) => {
+            }
+          );
+          AsyncStorage.setItem("token", `${this.state.dataSource.token}`);
+          AsyncStorage.setItem("client", `${this.state.dataSource.client}`);
+          AsyncStorage.setItem("uid", `${this.state.dataSource.email}`);
+        },
+        (error) => {
+          //console.log(error)
+          this.setState({
+            error: true,
+            isLoading: false
+          })
+        }
+      );
+    }
     GlRequest(
-      request ,
+      validate ,
       (data) => {
         this.setState({
-          dataSource: data.createSession,
           isLoading: false,
           loged: true,
         })
-        AsyncStorage.setItem("@loged", `${this.state.dataSource.email}`);
-        AsyncStorage.setItem("@session", `${this.props.navigation.state.params.pass}`);
       },
       (error) => {
         //console.log(error)
@@ -78,17 +124,6 @@ export default class HomeView extends React.Component {
           error: true,
           isLoading: false
         })
-      }
-    );
-    GlRequest(
-      requestLdap ,
-      (data) => {
-        this.setState({
-          dataSourceL: data.auth,
-          isLoadingL: false,
-        })
-      },
-      (error) => {
       }
     );
   }
@@ -126,7 +161,7 @@ export default class HomeView extends React.Component {
           <Login navigation={this.props.navigation}/>
       )
     }
-    if(this.state.loged && (this.state.dataSourceL.answer == "true")){
+    if(this.state.loged){
       return (
         <View style={styles.container}>
           <Text ></Text>
@@ -152,25 +187,6 @@ export default class HomeView extends React.Component {
               borderRadius={8}
               title="View A Random Lesson"
               onPress={() => this.props.navigation.navigate('Lesson')}
-            />
-          </View>
-        </View>
-      );
-    }
-    if(this.state.loged && (this.state.dataSourceL.answer == "false")){
-      return (
-        <View style={styles.container}>
-          <Text ></Text>
-          <Text style={styles.text}>This user is not registered on the ldap!</Text>
-          <View style={styles.containerOne}>
-            <Button
-              raised
-              fontSize={20}
-              icon={{name: 'done'}}
-              backgroundColor={'#00283F'}
-              borderRadius={8}
-              title="Go Back"
-              onPress={() => this.props.navigation.navigate('Login')}
             />
           </View>
         </View>
